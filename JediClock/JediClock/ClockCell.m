@@ -86,7 +86,7 @@
     [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.secondHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * second);
         self.minuteHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * minute);
-        self.hourHandView.transform     = CGAffineTransformMakeRotation(((M_PI * 2) / 12) * hour);
+        self.hourHandView.transform     = CGAffineTransformMakeRotation((((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12));
     } completion:NULL];
 }
 

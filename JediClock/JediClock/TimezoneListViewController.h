@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TimezoneTableViewController.h
 //  JediClock
 //
 //  Created by Steven Masini on 8/3/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TimezoneListViewController : UIViewController
 
 @end
-

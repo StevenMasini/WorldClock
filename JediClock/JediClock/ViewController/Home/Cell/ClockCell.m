@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIView *hourHandView;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *minuteHandWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *redCenterView;
 
 @property (strong, nonatomic) NSCalendar *calendar;
 
@@ -24,23 +26,57 @@
 @implementation ClockCell
 
 - (void)awakeFromNib {
-    self.clockView.layer.cornerRadius = self.clockView.frame.size.width / 2.0f;
-    self.centerView.layer.cornerRadius = self.centerView.frame.size.width / 2.0f;
-    
+
     self.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     self.titleLabel.text = [NSTimeZone localTimeZone].name;
     
-    [self setupHandsAnchorPoint];
+    [self setupCircle];
+    
+    [self setupHands];
     
     [self setupRefreshViewLoop];
     
     [self setupClockNumbers];
 }
 
-- (void)setupHandsAnchorPoint {
+#pragma mark - UITableViewCell inherited methods
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    [UIView animateWithDuration:0.25f animations:^{
+        self.clockView.alpha = editing ? 0.0f : 1.0f;
+    }];
+}
+
+#pragma mark - ClockCell setup methods
+
+- (void)setupCircle {
+    self.clockView.layer.cornerRadius = self.clockView.frame.size.width / 2.0f;
+    self.centerView.layer.cornerRadius = self.centerView.frame.size.width / 2.0f;
+    self.redCenterView.layer.cornerRadius = self.redCenterView.frame.size.width / 2.0f;
+}
+
+- (void)setupHands {
+    // setup hands view anchor point
     self.secondHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
     self.minuteHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
     self.hourHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
+    
+    // setup anti-aliasing for hands
+    self.secondHandView.layer.borderColor = [UIColor clearColor].CGColor;
+    self.secondHandView.layer.borderWidth = 1.0f;
+    self.secondHandView.layer.shouldRasterize = YES;
+    
+    self.minuteHandView.layer.borderColor = [UIColor clearColor].CGColor;
+    self.minuteHandView.layer.borderWidth = 0.5f;
+    self.minuteHandView.layer.cornerRadius = 1.0f;
+    self.minuteHandView.layer.shouldRasterize = YES;
+    
+    self.hourHandView.layer.borderColor = [UIColor clearColor].CGColor;
+    self.hourHandView.layer.borderWidth = 0.5f;
+    self.hourHandView.layer.cornerRadius = 1.0f;
+    self.hourHandView.layer.shouldRasterize = YES;
 }
 
 - (void)setupRefreshViewLoop {
@@ -58,13 +94,11 @@
         CGFloat x = ((c.x - 6) + (r - 9) * cos((PI2 / 12.0f) * i));
         CGFloat y = ((c.y - 6) + (r - 9) * sin((PI2 / 12.0f) * i));
         CGRect frame = CGRectMake(x, y, 12.0f, 12.0f);
-        NSLog(@"COORD: %@", NSStringFromCGRect(frame));
         
         UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
         hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
         
         NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
-        NSLog(@"T: %@", @(time));
         hourLabel.text = @(time).stringValue;
         hourLabel.textColor = [UIColor whiteColor];
         hourLabel.textAlignment = NSTextAlignmentCenter;
@@ -72,6 +106,8 @@
         [self.clockView addSubview:hourLabel];
     }
 }
+
+#pragma mark - ClockCell update methods
 
 - (void)updateHands {
     NSDateComponents *components = [self.calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:[NSDate date]];
@@ -83,11 +119,15 @@
     dateFormatter.dateFormat = @"hh:mm:ss";
     self.detailTitleLabel.text = [dateFormatter stringFromDate:[NSDate date]];
     
-    [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.secondHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * second);
-        self.minuteHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * minute);
-        self.hourHandView.transform     = CGAffineTransformMakeRotation((((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12));
-    } completion:NULL];
+    [UIView animateWithDuration:0.1f animations:^{
+        [self updateClockHandsWithHour:hour minute:minute second:second];
+    }];
+}
+
+- (void)updateClockHandsWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
+    self.secondHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * second);
+    self.minuteHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * minute);
+    self.hourHandView.transform     = CGAffineTransformMakeRotation((((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12));
 }
 
 @end

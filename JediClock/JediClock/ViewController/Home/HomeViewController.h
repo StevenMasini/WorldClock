@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimezoneListViewController : UIViewController
+@interface HomeViewController : UIViewController
 
 @end

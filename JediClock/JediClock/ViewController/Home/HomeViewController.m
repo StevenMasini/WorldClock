@@ -6,20 +6,25 @@
 //  Copyright (c) 2015 Steven Masini. All rights reserved.
 //
 
-#import "TimezoneListViewController.h"
+#import "HomeViewController.h"
 #import "ClockCell.h"
+#import "TimezoneManager.h"
 
-@interface TimezoneListViewController () <UITableViewDataSource, UITabBarDelegate>
+@interface HomeViewController () <UITableViewDataSource, UITabBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
-@implementation TimezoneListViewController
+@implementation HomeViewController
 
 static NSString *clockCellIdentifier = @"ClockCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSArray *timezones = [[TimezoneManager sharedManager] fetchTimezones];
+    for (Timezone *t in timezones) {
+        NSLog(@"T: %@", t.city);
+    }
 }
 
 #pragma mark - UITableViewDataSource

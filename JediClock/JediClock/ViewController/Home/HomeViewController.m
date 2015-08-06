@@ -12,7 +12,6 @@
 
 @interface HomeViewController () <UITableViewDataSource, UITabBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @end
 
 @implementation HomeViewController
@@ -25,6 +24,12 @@ static NSString *clockCellIdentifier = @"ClockCell";
     for (Timezone *t in timezones) {
         NSLog(@"T: %@", t.city);
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
+    NSLog(@"N: %@", [Timezone MR_numberOfEntitiesWithPredicate:predicate]);
 }
 
 #pragma mark - UITableViewDataSource

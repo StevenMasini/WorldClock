@@ -12,7 +12,8 @@
 
 @interface TimezonesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSArray *timezones;
+@property (nonatomic, strong) NSFetchedResultsController *timezones;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation TimezonesViewController
@@ -22,23 +23,32 @@ static NSString *cellIdentifier = @"TimezoneCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.timezones = [NSTimeZone knownTimeZoneNames];
-    NSArray *timezones = [[TimezoneManager sharedManager] fetchTimezones];
-    for (Timezone *t in timezones) {
-        NSLog(@"T: %@", t);
-    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"alphabeticIndex != nil"];
+    self.timezones = [Timezone MR_fetchAllGroupedBy:@"alphabeticIndex" withPredicate:predicate sortedBy:@"city" ascending:YES];
+    
+    self.tableView.sectionIndexColor = [UIColor colorWithRed:253.f/255.f
+                                                       green:61.f/255.f
+                                                        blue:57.f/255.f
+                                                       alpha:1.0f];
+    
 }
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.timezones.sections.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.timezones.count;
+    id<NSFetchedResultsSectionInfo>sectionInfo = self.timezones.sections[section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
-    cell.textLabel.text = self.timezones[indexPath.row];
+    Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
+    cell.textLabel.text = [timezone formattedName];
     
     return cell;
 }
@@ -46,7 +56,23 @@ static NSString *cellIdentifier = @"TimezoneCell";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
+    timezone.order = [Timezone MR_numberOfEntitiesWithPredicate:predicate];
+    [timezone.managedObjectContext MR_saveOnlySelfAndWait];
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
+    
+    return timezone.alphabeticIndex;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return  @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
 }
 
 #pragma mark - UISearchResultsUpdating

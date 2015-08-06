@@ -11,6 +11,7 @@
 
 @interface Timezone : NSManagedObject
 
+@property (nonatomic, retain) NSString * alphabeticIndex;
 @property (nonatomic, retain) NSString * city;
 @property (nonatomic, retain) NSString * continent;
 @property (nonatomic, retain) NSString * country;
@@ -21,5 +22,9 @@
 @end
 
 @interface Timezone (Factory)
+// factory
 + (Timezone *)timezoneWithIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context;
+
+// formatter
+- (NSString *)formattedName;
 @end

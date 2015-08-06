@@ -17,6 +17,7 @@
 @dynamic identifier;
 @dynamic order;
 @dynamic timezone;
+@dynamic alphabeticIndex;
 
 + (Timezone *)timezoneWithIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context {
     if (!identifier || identifier.length == 0 || !context) {
@@ -34,12 +35,30 @@
         if (components.count == 3) {
             timezone.country    = [components[1] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
             timezone.city       = [components[2] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+            
         } else if (components.count == 2) {
             timezone.city       = [components[1] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
         }
+        timezone.alphabeticIndex = [[timezone.city substringToIndex:1] uppercaseString];
     }
     
     return timezone;
+}
+
+#pragma mark - Formatted methods
+
+- (NSString *)formattedName {
+    if (!self.city) {
+        return nil;
+    }
+    
+    NSMutableString *name = [NSMutableString stringWithString:self.city];
+    if (self.country) {
+        [name appendFormat:@", %@", self.country];
+    }
+    [name appendFormat:@", %@", self.continent];
+    
+    return name;
 }
 
 @end

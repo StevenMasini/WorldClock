@@ -12,6 +12,7 @@
 
 @interface HomeViewController () <UITableViewDataSource, UITabBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *timezones;
 @end
 
 @implementation HomeViewController
@@ -20,28 +21,40 @@ static NSString *clockCellIdentifier = @"ClockCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSArray *timezones = [[TimezoneManager sharedManager] fetchTimezones];
-    for (Timezone *t in timezones) {
-        NSLog(@"T: %@", t.city);
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    NSLog(@"N: %@", [Timezone MR_numberOfEntitiesWithPredicate:predicate]);
+    self.timezones = [[Timezone MR_findAllWithPredicate:predicate] mutableCopy];
+    for (Timezone *t in self.timezones) {
+        NSLog(@"T: %@", t.city);
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.timezones.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ClockCell *cell = [tableView dequeueReusableCellWithIdentifier:clockCellIdentifier forIndexPath:indexPath];
-    
+    cell.timezone = self.timezones[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Timezone *timezone = self.timezones[indexPath.row];
+        timezone.order = @(-1);
+        [timezone.managedObjectContext MR_saveToPersistentStoreAndWait];
+        [self.timezones removeObjectAtIndex:indexPath.row];
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
+    }
 }
 
 #pragma mark - IBAction
@@ -49,6 +62,5 @@ static NSString *clockCellIdentifier = @"ClockCell";
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
 }
-
 
 @end

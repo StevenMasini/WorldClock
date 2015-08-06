@@ -7,35 +7,41 @@
 //
 
 #import "ClockCell.h"
+#import "TimezoneManager.h"
 
 @interface ClockCell ()
-@property (weak, nonatomic) IBOutlet UIView *centerView;
+// clock view
 @property (weak, nonatomic) IBOutlet UIView *clockView;
+@property (weak, nonatomic) IBOutlet UIView *centerView;
+@property (weak, nonatomic) IBOutlet UIView *redCenterView;
+
+// hands views
 @property (weak, nonatomic) IBOutlet UIView *secondHandView;
 @property (weak, nonatomic) IBOutlet UIView *minuteHandView;
 @property (weak, nonatomic) IBOutlet UIView *hourHandView;
+
+// title view
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *minuteHandWidthConstraint;
-@property (weak, nonatomic) IBOutlet UIView *redCenterView;
 
-@property (strong, nonatomic) NSCalendar *calendar;
+// constraint
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
+
+// property
+@property (assign, nonatomic) NSTimeInterval timeInterval;
 
 @end
 
 @implementation ClockCell
 
 - (void)awakeFromNib {
-
-    self.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    self.titleLabel.text = [NSTimeZone localTimeZone].name;
+    // 1) setup the circles rendering
+    [self setupCircles];
     
-    [self setupCircle];
-    
+    // 2) setup the hands rendering
     [self setupHands];
     
-    [self setupRefreshViewLoop];
-    
+    // 3) put the numbers on the clock
     [self setupClockNumbers];
 }
 
@@ -44,43 +50,62 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    CGFloat constant = editing ? 50.0f : 12.0f;
+    self.rightHorizontalSpacingConstraint.constant = constant;
     [UIView animateWithDuration:0.25f animations:^{
         self.clockView.alpha = editing ? 0.0f : 1.0f;
+        [self.clockView layoutIfNeeded];
     }];
+}
+
+#pragma mark - ClockCell setter methods
+
+- (void)setTimezone:(Timezone *)timezone {
+    self.titleLabel.text = timezone.city;
+    NSTimeZone *utc = [NSTimeZone timeZoneWithName:timezone.identifier];
+    
+    NSDate *date = [NSDate date];
+    self.timeInterval = [utc secondsFromGMTForDate:date];
+    
+    [self setupRefreshViewLoop];
 }
 
 #pragma mark - ClockCell setup methods
 
-- (void)setupCircle {
-    self.clockView.layer.cornerRadius = self.clockView.frame.size.width / 2.0f;
-    self.centerView.layer.cornerRadius = self.centerView.frame.size.width / 2.0f;
-    self.redCenterView.layer.cornerRadius = self.redCenterView.frame.size.width / 2.0f;
+- (void)setupCircles {
+    self.clockView.layer.cornerRadius       = self.clockView.frame.size.width / 2.0f;
+    self.centerView.layer.cornerRadius      = self.centerView.frame.size.width / 2.0f;
+    self.redCenterView.layer.cornerRadius   = self.redCenterView.frame.size.width / 2.0f;
 }
 
 - (void)setupHands {
     // setup hands view anchor point
-    self.secondHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
-    self.minuteHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
-    self.hourHandView.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
+    self.secondHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
+    self.minuteHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
+    self.hourHandView.layer.anchorPoint     = CGPointMake(0.5f, 1.0f);
     
     // setup anti-aliasing for hands
-    self.secondHandView.layer.borderColor = [UIColor clearColor].CGColor;
-    self.secondHandView.layer.borderWidth = 1.0f;
-    self.secondHandView.layer.shouldRasterize = YES;
+    self.secondHandView.layer.borderColor       = [UIColor clearColor].CGColor;
+    self.secondHandView.layer.borderWidth       = 1.0f;
+    self.secondHandView.layer.shouldRasterize   = YES;
     
-    self.minuteHandView.layer.borderColor = [UIColor clearColor].CGColor;
-    self.minuteHandView.layer.borderWidth = 0.5f;
-    self.minuteHandView.layer.cornerRadius = 1.0f;
-    self.minuteHandView.layer.shouldRasterize = YES;
+    self.minuteHandView.layer.borderColor       = [UIColor clearColor].CGColor;
+    self.minuteHandView.layer.borderWidth       = 0.5f;
+    self.minuteHandView.layer.cornerRadius      = 1.0f;
+    self.minuteHandView.layer.shouldRasterize   = YES;
     
-    self.hourHandView.layer.borderColor = [UIColor clearColor].CGColor;
-    self.hourHandView.layer.borderWidth = 0.5f;
-    self.hourHandView.layer.cornerRadius = 1.0f;
-    self.hourHandView.layer.shouldRasterize = YES;
+    self.hourHandView.layer.borderColor         = [UIColor clearColor].CGColor;
+    self.hourHandView.layer.borderWidth         = 0.5f;
+    self.hourHandView.layer.cornerRadius        = 1.0f;
+    self.hourHandView.layer.shouldRasterize     = YES;
 }
 
 - (void)setupRefreshViewLoop {
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateHands) userInfo:nil repeats:YES];
+    CABasicAnimation *secondAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+                                                     selector:@selector(updateTime)
+                                                    userInfo:nil repeats:YES];
     [timer fire];
 }
 
@@ -109,25 +134,32 @@
 
 #pragma mark - ClockCell update methods
 
-- (void)updateHands {
-    NSDateComponents *components = [self.calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:[NSDate date]];
-    NSInteger second    = components.second;
-    NSInteger minute    = components.minute;
-    NSInteger hour      = components.hour;
+- (void)updateTime {
+    NSDate *date = [NSDate dateWithTimeInterval:self.timeInterval sinceDate:[NSDate date]];
     
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"hh:mm:ss";
-    self.detailTitleLabel.text = [dateFormatter stringFromDate:[NSDate date]];
+    self.detailTitleLabel.text = [dateFormatter stringFromDate:date];
     
+    NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
     [UIView animateWithDuration:0.1f animations:^{
-        [self updateClockHandsWithHour:hour minute:minute second:second];
+        [self updateClockHandsWithDateComponents:dateComponents];
     }];
 }
 
-- (void)updateClockHandsWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second {
-    self.secondHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * second);
-    self.minuteHandView.transform   = CGAffineTransformMakeRotation(((M_PI * 2) / 60) * minute);
-    self.hourHandView.transform     = CGAffineTransformMakeRotation((((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12));
+- (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
+    NSInteger second    = dateComponents.second;
+    NSInteger minute    = dateComponents.minute;
+    NSInteger hour      = dateComponents.hour;
+    
+    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
+    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
+    
+    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
+    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
+    
+    CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
+    self.hourHandView.transform     = CGAffineTransformMakeRotation(hourAngle);
 }
 
 @end

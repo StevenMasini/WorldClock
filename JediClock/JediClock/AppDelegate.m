@@ -17,6 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"JediClock"];
+    
+    [[TimezoneManager sharedManager] setupTimezoneDatabase];
+    
     return YES;
 }
 

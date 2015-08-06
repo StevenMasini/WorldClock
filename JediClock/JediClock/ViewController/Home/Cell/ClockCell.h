@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClockCell : UITableViewCell
+@class Timezone;
 
+@interface ClockCell : UITableViewCell
+@property (weak, nonatomic) Timezone *timezone;
 @end

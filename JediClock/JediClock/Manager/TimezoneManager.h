@@ -19,6 +19,6 @@
 // setup
 - (void)setupTimezoneDatabase;
 
-// fetch
-- (NSArray *)fetchTimezones;
++ (NSDateComponents *)dateComponentsFromDate:(NSDate *)date;
+
 @end

@@ -9,6 +9,9 @@
 #import "TimezoneManager.h"
 #import "Timezone.h"
 
+@interface TimezoneManager ()
+@end
+
 @implementation TimezoneManager
 
 #pragma mark - Singleton
@@ -28,7 +31,6 @@
     self = [super init];
     if (self) {
         self.context = [NSManagedObjectContext MR_defaultContext];
-        [self setupTimezoneDatabase];
     }
     return self;
 }
@@ -47,8 +49,9 @@
     [self.context MR_saveToPersistentStoreAndWait];
 }
 
-- (NSArray *)fetchTimezones {    
-    return [Timezone MR_findAll];;
++ (NSDateComponents *)dateComponentsFromDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date];
 }
 
 @end

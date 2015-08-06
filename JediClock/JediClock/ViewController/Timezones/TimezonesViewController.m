@@ -57,11 +57,14 @@ static NSString *cellIdentifier = @"TimezoneCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    timezone.order = [Timezone MR_numberOfEntitiesWithPredicate:predicate];
-    [timezone.managedObjectContext MR_saveOnlySelfAndWait];
+    NSLog(@"NAME: %@", timezone.city);
     
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
+    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate] + 1);
+    
+    [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -78,7 +81,7 @@ static NSString *cellIdentifier = @"TimezoneCell";
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
+    NSLog(@"SEARCH: %@", self.searchBar.text);
 }
 
 #pragma mark - IBActions

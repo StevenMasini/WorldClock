@@ -111,8 +111,8 @@
                                             <outlet property="detailTitleLabel" destination="HHo-Eu-xn0" id="Izl-OZ-77Y"/>
                                             <outlet property="hourHandView" destination="8gm-zA-vHv" id="N60-Mv-LrN"/>
                                             <outlet property="minuteHandView" destination="ja6-ES-hXx" id="4vQ-Ng-s6e"/>
-                                            <outlet property="minuteHandWidthConstraint" destination="Sd1-Tr-rId" id="Xjb-Pt-YVj"/>
                                             <outlet property="redCenterView" destination="gb6-ys-WXj" id="29a-Kx-4BJ"/>
+                                            <outlet property="rightHorizontalSpacingConstraint" destination="0RZ-Uq-t4b" id="46f-jP-wiz"/>
                                             <outlet property="secondHandView" destination="bpg-gx-LRg" id="Fcg-Ul-HnR"/>
                                             <outlet property="titleLabel" destination="dpK-Xd-skL" id="eZo-c2-mIh"/>
                                         </connections>

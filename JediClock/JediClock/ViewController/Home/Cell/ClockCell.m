@@ -43,10 +43,18 @@
     // 3) put the numbers on the clock
     [self setupClockNumbers];
     
+    self.clockView.alpha           = self.shouldDisplayNumericClock ? 0.0f : 1.0f;
+    self.numericClockLabel.alpha   = self.shouldDisplayNumericClock ? 1.0f : 0.0f;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(switchClockToNumeric)
                                                  name:kSwitchClockNotification
                                                object:nil];
+}
+
+- (void)prepareForReuse {
+    self.clockView.alpha           = self.shouldDisplayNumericClock ? 0.0f : 1.0f;
+    self.numericClockLabel.alpha   = self.shouldDisplayNumericClock ? 1.0f : 0.0f;
 }
 
 - (void)dealloc {
@@ -72,7 +80,8 @@
     
     __weak typeof(self) wself = self;
     [UIView animateWithDuration:0.25f animations:^{
-       wself.clockView.alpha = editing ? 0.0f : 1.0f;
+        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
     }];
 }
 
@@ -153,17 +162,19 @@
 #pragma mark - ClockCell update methods
 
 - (void)updateTime {
+    // 1) retrieve the right time
     NSDate *date = [NSDate dateWithTimeInterval:self.timeInterval sinceDate:[NSDate date]];
-    if (self.shouldDisplayNumericClock) {
-        NSDateFormatter *dateFormatter = [NSDateFormatter new];
-        dateFormatter.dateFormat = @"HH:mm";
-        self.numericClockLabel.text = [dateFormatter stringFromDate:date];
-    } else {
-        NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
-        [UIView animateWithDuration:0.1f animations:^{
-            [self updateClockHandsWithDateComponents:dateComponents];
-        }];
-    }
+    
+    // 2) setup the time for the numeric clock
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"HH:mm";
+    self.numericClockLabel.text = [dateFormatter stringFromDate:date];
+    
+    // 3) setup the time for the analog clock
+    NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
+    [UIView animateWithDuration:0.1f animations:^{
+        [self updateClockHandsWithDateComponents:dateComponents];
+    }];
 }
 
 - (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {

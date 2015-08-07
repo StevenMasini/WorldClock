@@ -20,6 +20,7 @@
 		90694B1B1B6F9E770066795F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90694B1A1B6F9E770066795F /* Images.xcassets */; };
 		90694B1E1B6F9E770066795F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90694B1C1B6F9E770066795F /* LaunchScreen.xib */; };
 		90694B2A1B6F9E770066795F /* JediClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90694B291B6F9E770066795F /* JediClockTests.m */; };
+		907C3A4A1B750EC900926890 /* UITableView+Sugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 907C3A491B750EC900926890 /* UITableView+Sugar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		90694B231B6F9E770066795F /* JediClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JediClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90694B281B6F9E770066795F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90694B291B6F9E770066795F /* JediClockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JediClockTests.m; sourceTree = "<group>"; };
+		907C3A481B750EC900926890 /* UITableView+Sugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Sugar.h"; sourceTree = "<group>"; };
+		907C3A491B750EC900926890 /* UITableView+Sugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Sugar.m"; sourceTree = "<group>"; };
 		D4FB584B97FC67712BD9CE27 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +169,7 @@
 		90694B091B6F9E770066795F /* JediClock */ = {
 			isa = PBXGroup;
 			children = (
+				907C3A471B750EAA00926890 /* Categorie */,
 				905856AE1B72607A005E6EB0 /* Model */,
 				905856AA1B725DA3005E6EB0 /* Manager */,
 				905856611B723ED0005E6EB0 /* ViewController */,
@@ -203,6 +207,15 @@
 				90694B281B6F9E770066795F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		907C3A471B750EAA00926890 /* Categorie */ = {
+			isa = PBXGroup;
+			children = (
+				907C3A481B750EC900926890 /* UITableView+Sugar.h */,
+				907C3A491B750EC900926890 /* UITableView+Sugar.m */,
+			);
+			path = Categorie;
 			sourceTree = "<group>";
 		};
 		F75F8EE62FD26950BD6A1615 /* Pods */ = {
@@ -357,6 +370,7 @@
 				9058566D1B723F78005E6EB0 /* TimezonesViewController.m in Sources */,
 				905856691B723ED0005E6EB0 /* HomeViewController.m in Sources */,
 				90694B0D1B6F9E770066795F /* main.m in Sources */,
+				907C3A4A1B750EC900926890 /* UITableView+Sugar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

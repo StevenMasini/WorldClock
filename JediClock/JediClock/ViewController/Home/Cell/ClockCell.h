@@ -10,6 +10,8 @@
 
 @class Timezone;
 
+static NSString *kSwitchClockNotification = @"SwitchClockNotification";
+
 @interface ClockCell : UITableViewCell
 @property (weak, nonatomic) Timezone *timezone;
 @end

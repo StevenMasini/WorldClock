@@ -23,9 +23,11 @@
 // title view
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numericClockLabel;
 
 // property
 @property (assign, nonatomic) NSTimeInterval timeInterval;
+@property (assign, nonatomic) BOOL shouldDisplayNumericClock;
 
 @end
 
@@ -40,6 +42,27 @@
     
     // 3) put the numbers on the clock
     [self setupClockNumbers];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(switchClockToNumeric)
+                                                 name:kSwitchClockNotification
+                                               object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - ClockCell methods
+
+- (void)switchClockToNumeric {
+    self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
+    
+    __weak typeof(self) wself = self;
+    [UIView animateWithDuration:0.25f animations:^{
+        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
+    }];
 }
 
 #pragma mark - UITableViewCell inherited methods
@@ -47,19 +70,22 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    __weak typeof(self) wself = self;
     [UIView animateWithDuration:0.25f animations:^{
-        self.clockView.alpha = editing ? 0.0f : 1.0f;
+       wself.clockView.alpha = editing ? 0.0f : 1.0f;
     }];
 }
 
 #pragma mark - ClockCell setter methods
 
 - (void)setTimezone:(Timezone *)timezone {
-    self.titleLabel.text = timezone.city;
-    NSTimeZone *utc = [NSTimeZone timeZoneWithName:timezone.identifier];
+    NSTimeZone *locationTimeZone = [NSTimeZone timeZoneWithName:timezone.identifier];
+    NSTimeInterval locationTimeInterval = [locationTimeZone secondsFromGMT];
+    NSTimeInterval localTimeInterval = [[NSTimeZone systemTimeZone] secondsFromGMT];
+    self.timeInterval = locationTimeInterval - localTimeInterval;
     
-    NSDate *date = [NSDate date];
-    self.timeInterval = [utc secondsFromGMTForDate:date];
+    self.titleLabel.text = timezone.city;
+    self.detailTitleLabel.text = [NSString stringWithFormat:@""];
     
     [self setupRefreshViewLoop];
 }
@@ -95,8 +121,6 @@
 }
 
 - (void)setupRefreshViewLoop {
-    CABasicAnimation *secondAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
                                                      selector:@selector(updateTime)
                                                     userInfo:nil repeats:YES];
@@ -130,15 +154,16 @@
 
 - (void)updateTime {
     NSDate *date = [NSDate dateWithTimeInterval:self.timeInterval sinceDate:[NSDate date]];
-    
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"hh:mm:ss";
-    self.detailTitleLabel.text = [dateFormatter stringFromDate:date];
-    
-    NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
-    [UIView animateWithDuration:0.1f animations:^{
-        [self updateClockHandsWithDateComponents:dateComponents];
-    }];
+    if (self.shouldDisplayNumericClock) {
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"HH:mm";
+        self.numericClockLabel.text = [dateFormatter stringFromDate:date];
+    } else {
+        NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
+        [UIView animateWithDuration:0.1f animations:^{
+            [self updateClockHandsWithDateComponents:dateComponents];
+        }];
+    }
 }
 
 - (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {

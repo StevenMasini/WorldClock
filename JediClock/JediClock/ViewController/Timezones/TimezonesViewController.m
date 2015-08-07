@@ -61,6 +61,7 @@ static NSString *cellIdentifier = @"TimezoneCell";
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
     timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate] + 1);
+    NSLog(@"ORDER: %@", timezone.order);
     
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
         [self dismissViewControllerAnimated:YES completion:NULL];

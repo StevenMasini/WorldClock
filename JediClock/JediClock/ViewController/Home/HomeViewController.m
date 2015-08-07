@@ -26,10 +26,11 @@ static NSString *clockCellIdentifier = @"ClockCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    self.timezones = [[Timezone MR_findAllWithPredicate:predicate] mutableCopy];
+    self.timezones = [[Timezone MR_findAllSortedBy:@"order" ascending:YES withPredicate:predicate] mutableCopy];
     for (Timezone *t in self.timezones) {
-        NSLog(@"T: %@", t.city);
+        NSLog(@"T: %@: %@", t.city, t.order);
     }
+    NSLog(@"--------------------");
     [self.tableView reloadData];
 }
 
@@ -41,7 +42,10 @@ static NSString *clockCellIdentifier = @"ClockCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ClockCell *cell = [tableView dequeueReusableCellWithIdentifier:clockCellIdentifier forIndexPath:indexPath];
-    cell.timezone = self.timezones[indexPath.row];
+    cell.showsReorderControl = YES;
+    Timezone *timezone = self.timezones[indexPath.row];
+    cell.timezone = timezone;
+    NSLog(@"C: %@: %@", timezone.city, timezone.order);
     return cell;
 }
 
@@ -50,11 +54,20 @@ static NSString *clockCellIdentifier = @"ClockCell";
         Timezone *timezone = self.timezones[indexPath.row];
         timezone.order = @(-1);
         [timezone.managedObjectContext MR_saveToPersistentStoreAndWait];
+        
         [self.timezones removeObjectAtIndex:indexPath.row];
         [self.tableView beginUpdates];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView endUpdates];
     }
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    Timezone *timezoneToMove = [self.timezones objectAtIndex:sourceIndexPath.row];
+    [self.timezones removeObjectAtIndex:sourceIndexPath.row];
+    [self.timezones insertObject:timezoneToMove atIndex:destinationIndexPath.row];
+    timezoneToMove.order = @(destinationIndexPath.row + 1);
+    [timezoneToMove.managedObjectContext MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - IBAction

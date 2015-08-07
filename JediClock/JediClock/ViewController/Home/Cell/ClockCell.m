@@ -24,9 +24,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
-// constraint
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
-
 // property
 @property (assign, nonatomic) NSTimeInterval timeInterval;
 
@@ -50,11 +47,8 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    CGFloat constant = editing ? 50.0f : 12.0f;
-    self.rightHorizontalSpacingConstraint.constant = constant;
     [UIView animateWithDuration:0.25f animations:^{
         self.clockView.alpha = editing ? 0.0f : 1.0f;
-        [self.clockView layoutIfNeeded];
     }];
 }
 

@@ -75,6 +75,8 @@
     NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitDay;
     NSDateComponents *localDateComponents = [gregorian components:unit fromDate:[NSDate date] toDate:self.date options:0];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:self.identifier];
+    NSLog(@"IS DAYLIGHT SAVING: %@", timeZone.isDaylightSavingTime ? @"YES" : @"NO");
     NSLog(@"COMPONENTS: %@", localDateComponents);
     
     return nil;

@@ -75,11 +75,6 @@
     }];
 }
 
-- (void)reset {
-    // need to stop the timer before the cell is deleted
-    [self.timer invalidate];
-}
-
 #pragma mark - UITableViewCell inherited methods
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -103,6 +98,11 @@
     [self.timezone attributedStringTimelapse];
     
     [self setupRefreshViewLoop];
+}
+
+- (void)invalidateRefreshLoop {
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark - ClockCell setup methods
@@ -170,9 +170,6 @@
 - (void)updateTime {
     // 1) retrieve the right time
     NSDate *date = self.timezone.date;
-    if (!date) {
-        NSLog(@"MERDE!");
-    }
     
     // 2) setup the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];

@@ -115,8 +115,6 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         
         [self.timezones removeObjectAtIndex:indexPath.row];
         [self.tableView beginUpdates];
-        ClockCell *cell = (ClockCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [cell reset];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         // avoid a crash if there is no more timezone to display
@@ -153,6 +151,13 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.1f;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[ClockCell class]]) {
+        ClockCell *clockCell = (ClockCell *)cell;
+        [clockCell invalidateRefreshLoop];
+    }
 }
 
 #pragma mark - IBAction

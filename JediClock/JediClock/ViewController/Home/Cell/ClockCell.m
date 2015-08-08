@@ -27,7 +27,6 @@
 
 // property
 @property (assign, nonatomic) NSTimeInterval timeInterval;
-@property (assign, nonatomic) BOOL shouldDisplayNumericClock;
 
 @end
 

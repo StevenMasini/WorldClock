@@ -21,6 +21,7 @@
 
 // property
 @property (strong, nonatomic) NSMutableArray *timezones;
+@property (assign, nonatomic) BOOL shouldDisplayNumericClock;
 @end
 
 @implementation HomeViewController
@@ -84,6 +85,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         cell.showsReorderControl = YES;
         
         Timezone *timezone = self.timezones[indexPath.row];
+        cell.shouldDisplayNumericClock = self.shouldDisplayNumericClock;
         cell.timezone = timezone;
         
         return cell;
@@ -159,6 +161,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 - (IBAction)tapGestureAction:(id)sender {
+    self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
     [[NSNotificationCenter defaultCenter] postNotificationName:kSwitchClockNotification object:nil];
 }
 

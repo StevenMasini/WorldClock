@@ -38,6 +38,10 @@ static NSString *cellIdentifier = @"TimezoneCell";
     
 }
 
+- (void)dealloc {
+    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

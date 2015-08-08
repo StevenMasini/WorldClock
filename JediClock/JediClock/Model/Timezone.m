@@ -71,4 +71,27 @@
     return name;
 }
 
+- (NSAttributedString *)attributedStringTimelapse {
+    NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitDay;
+    NSDateComponents *localDateComponents = [gregorian components:unit fromDate:[NSDate date] toDate:self.date options:0];
+    NSLog(@"COMPONENTS: %@", localDateComponents);
+    
+    return nil;
+}
+
+- (NSDate *)date {
+    NSTimeInterval timeInterval = [self timeInterval];
+    return [NSDate dateWithTimeInterval:timeInterval sinceDate:[NSDate date]];
+}
+
+- (NSTimeInterval)timeInterval {
+    NSTimeZone *locationTimeZone = [NSTimeZone timeZoneWithName:self.identifier];
+    
+    NSTimeInterval locationTimeInterval = [locationTimeZone secondsFromGMT];
+    NSTimeInterval localTimeInterval = [[NSTimeZone systemTimeZone] secondsFromGMT];
+    
+    return locationTimeInterval - localTimeInterval;
+}
+
 @end

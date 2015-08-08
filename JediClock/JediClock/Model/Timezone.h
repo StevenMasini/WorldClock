@@ -25,6 +25,10 @@
 // factory
 + (Timezone *)timezoneWithIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context;
 
-// formatter
-- (NSString *)formattedName;
+@property (weak, nonatomic, readonly) NSString          *formattedName;
+@property (weak, nonatomic, readonly) NSDate            *date;
+@property (assign, nonatomic, readonly) NSTimeInterval  timeInterval;
+
+- (NSAttributedString *)attributedStringTimelapse;
+
 @end

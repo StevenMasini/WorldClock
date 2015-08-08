@@ -13,6 +13,9 @@
 static NSString *kSwitchClockNotification = @"SwitchClockNotification";
 
 @interface ClockCell : UITableViewCell
+
+- (void)reset;
+
 @property (weak, nonatomic) Timezone *timezone;
 @property (assign, nonatomic) BOOL shouldDisplayNumericClock;
 @end

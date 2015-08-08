@@ -27,6 +27,7 @@
 
 // property
 @property (assign, nonatomic) NSTimeInterval timeInterval;
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -57,6 +58,8 @@
 }
 
 - (void)dealloc {
+    // even if the dealloc is rarely call because of the reuse cell system,
+    // remove the notification once dealloc is called, to be clean
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -70,6 +73,11 @@
         wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
         wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
     }];
+}
+
+- (void)reset {
+    // need to stop the timer before the cell is deleted
+    [self.timer invalidate];
 }
 
 #pragma mark - UITableViewCell inherited methods
@@ -87,13 +95,12 @@
 #pragma mark - ClockCell setter methods
 
 - (void)setTimezone:(Timezone *)timezone {
-    NSTimeZone *locationTimeZone = [NSTimeZone timeZoneWithName:timezone.identifier];
-    NSTimeInterval locationTimeInterval = [locationTimeZone secondsFromGMT];
-    NSTimeInterval localTimeInterval = [[NSTimeZone systemTimeZone] secondsFromGMT];
-    self.timeInterval = locationTimeInterval - localTimeInterval;
+    _timezone = timezone;
     
+    self.timeInterval = [timezone timeInterval];
     self.titleLabel.text = timezone.city;
-    self.detailTitleLabel.text = [NSString stringWithFormat:@""];
+    
+    [self.timezone attributedStringTimelapse];
     
     [self setupRefreshViewLoop];
 }
@@ -129,10 +136,10 @@
 }
 
 - (void)setupRefreshViewLoop {
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
                                                      selector:@selector(updateTime)
                                                     userInfo:nil repeats:YES];
-    [timer fire];
+    [self.timer fire];
 }
 
 - (void)setupClockNumbers {
@@ -162,7 +169,10 @@
 
 - (void)updateTime {
     // 1) retrieve the right time
-    NSDate *date = [NSDate dateWithTimeInterval:self.timeInterval sinceDate:[NSDate date]];
+    NSDate *date = self.timezone.date;
+    if (!date) {
+        NSLog(@"MERDE!");
+    }
     
     // 2) setup the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];

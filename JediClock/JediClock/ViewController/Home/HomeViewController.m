@@ -57,6 +57,10 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     self.tapGestureRecognizer.enabled = YES;
 }
 
+- (void)dealloc {
+    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -110,8 +114,9 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         [timezone.managedObjectContext MR_saveToPersistentStoreAndWait];
         
         [self.timezones removeObjectAtIndex:indexPath.row];
-        
         [self.tableView beginUpdates];
+        ClockCell *cell = (ClockCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell reset];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         // avoid a crash if there is no more timezone to display

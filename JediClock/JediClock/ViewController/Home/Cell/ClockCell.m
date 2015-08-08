@@ -193,6 +193,7 @@
     self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
     self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
     self.hourHandView.backgroundColor   = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+    self.centerView.backgroundColor     = isDay ? [UIColor blackColor] : [UIColor whiteColor];
     for (UIView *subview in self.clockView.subviews) {
         if ([subview isKindOfClass:[UILabel class]]) {
             UILabel *label = (UILabel *)subview;

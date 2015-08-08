@@ -78,14 +78,38 @@
     NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitDay;
     
-    NSDateComponents *localDateComponents = [gregorian components:unit fromDate:[NSDate date] toDate:self.date options:0];
-    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:self.identifier];
-    NSLog(@"IS DAYLIGHT SAVING: %@", timeZone.isDaylightSavingTime ? @"YES" : @"NO");
-    NSLog(@"COMPONENTS: %@", localDateComponents);
+    NSDateComponents *localDateComponents = [gregorian components:unit
+                                                         fromDate:[NSDate date]
+                                                           toDate:self.date
+                                                          options:0];
     
     NSMutableAttributedString *as = [NSMutableAttributedString new];
-    if (localDateComponents.hour == 0) {
+    NSInteger day = localDateComponents.day;
+    if (day == 0) {
         [as appendNewAttributedString:@"Today" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+    } else if (day > 0) {
+        [as appendNewAttributedString:@"Tomorrow" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+    } else if (day < 0) {
+        [as appendNewAttributedString:@"Yesterday" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+    }
+    
+    NSTimeZone *destinationTimeZone = [NSTimeZone timeZoneWithName:self.identifier];
+    BOOL isDayLightSavingTime = destinationTimeZone.isDaylightSavingTime;
+    NSLog(@"%@ - %@ \rDAYLIGHT: %@", self.city, localDateComponents, isDayLightSavingTime ? @"YES" : @"NO");
+    
+    NSInteger hour = localDateComponents.hour;
+    if (hour > 0) {
+        hour = hour + (isDayLightSavingTime ? 1 : 0);
+        [as appendNewAttributedString:@", " attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+        NSString *hourText = (hour == 1) ? @"hour" : @"hours";
+        NSString *aheadText = [NSString stringWithFormat:@"%@ %@ ahead", @(hour), hourText];
+        [as appendNewAttributedString:aheadText attributes:@{ASFONT(@"HelveticaNeue", 14.0f)}];
+    } else if (hour < 0) {
+        hour = (hour * -1) + (isDayLightSavingTime ? 1 : 0);
+        [as appendNewAttributedString:@", " attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+        NSString *hourText = (hour == -1) ? @"hour" : @"hours";
+        NSString *behindText = [NSString stringWithFormat:@"%@ %@ behind", @(hour), hourText];
+        [as appendNewAttributedString:behindText attributes:@{ASFONT(@"HelveticaNeue", 14.0f)}];
     }
     
     return as;

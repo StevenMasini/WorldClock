@@ -183,12 +183,12 @@
         return;
     }
     
-    // 2) setup the time for the numeric clock
+    // 2) update the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"HH:mm";
     self.numericClockLabel.text = [dateFormatter stringFromDate:date];
     
-    // 3) setup clock color according to the day/night
+    // 3) update clock color according to the day/night
     BOOL isDay = self.timezone.isDay;
     self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
     self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
@@ -200,7 +200,10 @@
         }
     }
     
-    // 4) setup the time for the analog clock
+    // 4) update the detail text
+    self.detailTitleLabel.attributedText = [self.timezone attributedStringTimelapse];
+    
+    // 5) update the hands position for the analog clock
     NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
     [UIView animateWithDuration:0.1f animations:^{
         [self updateClockHandsWithDateComponents:dateComponents];

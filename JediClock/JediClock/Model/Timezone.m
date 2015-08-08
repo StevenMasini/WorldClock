@@ -19,8 +19,18 @@
 @dynamic timezone;
 @dynamic alphabeticIndex;
 
+/**
+ *  @author Steven Masini, 08-Aug-2015
+ *
+ *  @brief  Create the timezone entity by cleaning them up
+ *
+ *  @param identifier The TimeZone identifier
+ *  @param context    The managed object context where to save the entities
+ *
+ *  @return A well-formatted core data entity
+ */
 + (Timezone *)timezoneWithIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context {
-    if (!identifier || identifier.length == 0 || !context) {
+    if (!identifier || identifier.length == 0 || !context || [identifier isEqualToString:@"GMT"]) {
         return nil;
     }
     

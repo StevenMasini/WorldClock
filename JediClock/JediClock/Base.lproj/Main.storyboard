@@ -21,7 +21,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="92" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="lg0-30-wiC">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" showsReorderControl="YES" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ClockCell" id="uFx-jn-7Wd" customClass="ClockCell">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -98,7 +98,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MtA-vZ-3oc">
                                                     <rect key="frame" x="213" y="10" width="90.5" height="42.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="36"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -291,7 +291,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="searchBar" destination="SoS-yr-P51" id="YLu-jW-6ea"/>
-                        <outlet property="searchDisplayController" destination="LwD-xH-8DI" id="3rp-Kd-bK8"/>
                         <outlet property="tableView" destination="g3Z-zM-cCy" id="SjN-LE-wVv"/>
                     </connections>
                 </viewController>
@@ -303,15 +302,6 @@
                         <navigationItem title="Title" id="g39-Rq-25e"/>
                     </items>
                 </navigationBar>
-                <searchDisplayController id="LwD-xH-8DI">
-                    <connections>
-                        <outlet property="delegate" destination="qRA-2S-sBz" id="8h5-UF-ggD"/>
-                        <outlet property="searchBar" destination="SoS-yr-P51" id="qAt-Ue-6lu"/>
-                        <outlet property="searchContentsController" destination="qRA-2S-sBz" id="8kx-P7-4DV"/>
-                        <outlet property="searchResultsDataSource" destination="qRA-2S-sBz" id="QTE-oL-TkP"/>
-                        <outlet property="searchResultsDelegate" destination="qRA-2S-sBz" id="9Rl-GY-mDR"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1231" y="195"/>
         </scene>

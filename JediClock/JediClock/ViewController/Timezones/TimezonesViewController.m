@@ -10,10 +10,15 @@
 #import "TimezoneManager.h"
 #import "Timezone.h"
 
-@interface TimezonesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
+@interface TimezonesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+// views
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSFetchedResultsController *timezones;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+// property
+@property (nonatomic, strong) NSFetchedResultsController *timezones;
+@property (nonatomic, strong) NSString *searchText;
+@property (nonatomic, strong) NSArray *filteredTimezones;
 @end
 
 @implementation TimezonesViewController
@@ -36,18 +41,30 @@ static NSString *cellIdentifier = @"TimezoneCell";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.searchText.length) {
+        return 1;
+    }
     return self.timezones.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.searchText.length) {
+        return self.filteredTimezones.count;
+    }
     id<NSFetchedResultsSectionInfo>sectionInfo = self.timezones.sections[section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-
-    Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
+    
+    Timezone *timezone;
+    if (self.searchText.length) {
+        timezone = self.filteredTimezones[indexPath.row];
+    } else {
+        timezone = [self.timezones objectAtIndexPath:indexPath];
+    }
+    
     cell.textLabel.text = [timezone formattedName];
     
     return cell;
@@ -56,7 +73,12 @@ static NSString *cellIdentifier = @"TimezoneCell";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
+    Timezone *timezone;
+    if (self.searchText.length) {
+        timezone = self.filteredTimezones[indexPath.row];
+    } else {
+        timezone = [self.timezones objectAtIndexPath:indexPath];
+    }
     NSLog(@"NAME: %@", timezone.city);
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
@@ -69,25 +91,42 @@ static NSString *cellIdentifier = @"TimezoneCell";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (self.searchText.length) {
+        return @"";
+    }
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     Timezone *timezone = [self.timezones objectAtIndexPath:indexPath];
     
     return timezone.alphabeticIndex;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.searchText.length) {
+        return 0.0f;
+    }
+    return tableView.sectionHeaderHeight;
+}
+
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    if (self.searchText.length) {
+        return @[];
+    }
     return  @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
 }
 
-#pragma mark - UISearchResultsUpdating
+#pragma mark - UISearchBarDelegate
 
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSLog(@"SEARCH: %@", self.searchBar.text);
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.searchText = searchText;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"city CONTAINS %@ || country CONTAINS %@ || continent CONTAINS %@", searchText, searchText, searchText];
+    self.filteredTimezones = [Timezone MR_findAllWithPredicate:predicate];
+    [self.tableView reloadData];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(id)sender {
+    [self.searchBar resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

@@ -33,7 +33,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.editBarButtonItem setPossibleTitles:[NSSet setWithObjects:@"Edit", @"Done", nil]];
+    [self.editBarButtonItem setPossibleTitles:[NSSet setWithObjects:@"", @"Edit", @"Done", nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -41,7 +41,8 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
     self.timezones = [[Timezone MR_findAllSortedBy:@"order" ascending:YES withPredicate:predicate] mutableCopy];
-    self.tableView.scrollEnabled = (self.timezones.count > 0) ? YES : NO;
+    self.tableView.scrollEnabled = self.timezones.count ? YES : NO;
+    self.editBarButtonItem.title = self.timezones.count ? @"Edit" : @"";
     
     [self.tableView reloadData];
 }
@@ -50,7 +51,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     [super viewDidDisappear:animated];
     
     // reset
-    self.editBarButtonItem.title = @"Edit";
+    self.editBarButtonItem.title = self.timezones.count ? @"Edit" : @"";
     self.tableView.editing = NO;
     self.tapGestureRecognizer.enabled = YES;
 }
@@ -116,6 +117,8 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
             NSIndexPath *noClockIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
             [self.tableView insertRowsAtIndexPaths:@[noClockIndexPath]
                                   withRowAnimation:UITableViewRowAnimationAutomatic];
+            self.editBarButtonItem.title = @"";
+            self.tableView.editing = NO;
             self.tableView.scrollEnabled = NO;
         }
         [self.tableView endUpdates];

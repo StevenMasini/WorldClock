@@ -125,7 +125,7 @@ static NSString *cellIdentifier = @"TimezoneCell";
     NSLog(@"NAME: %@", timezone.city);
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate] + 1);
+    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate]);
     NSLog(@"ORDER: %@", timezone.order);
     
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {

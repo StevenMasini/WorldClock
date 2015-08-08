@@ -161,7 +161,7 @@ static NSString *cellIdentifier = @"TimezoneCell";
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     self.searchText = searchText;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"city CONTAINS %@ || country CONTAINS %@ || continent CONTAINS %@", searchText, searchText, searchText];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"city CONTAINS[cd] %@ || country CONTAINS[cd] %@ || continent CONTAINS[cd] %@", searchText, searchText, searchText];
     self.filteredTimezones = [Timezone MR_findAllWithPredicate:predicate];
     [self.tableView reloadData];
 }

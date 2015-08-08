@@ -77,14 +77,15 @@
 - (NSAttributedString *)attributedStringTimelapse {
     // 1) extract the components from the date
     NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *localDateComponents = [gregorian components:NSCalendarUnitDay
-                                                         fromDate:[NSDate date]
-                                                           toDate:self.date
-                                                          options:0];
+    NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour;
+    NSDateComponents *hereComponents    = [gregorian components:unit fromDate:[NSDate date]];
+    NSDateComponents *thereComponents   = [gregorian components:unit fromDate:self.date];
+    
+    NSLog(@"");
     
     // 2) define rather it's yesterday, today or tomorrow back there
     NSMutableAttributedString *as = [NSMutableAttributedString new];
-    NSInteger day = localDateComponents.day;
+    NSInteger day = thereComponents.day - hereComponents.day;
     if (day == 0) {
         [as appendNewAttributedString:@"Today" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
     } else if (day > 0) {
@@ -94,7 +95,7 @@
     }
     
     // 4) define the text to display according to the time, and the daylight saving policy
-    NSInteger hour = self.timeInterval / 3600;
+    NSInteger hour = (thereComponents.hour + day * 24) - hereComponents.hour;
     if (hour > 0) {
         [as appendNewAttributedString:@", " attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
         NSString *hourText = (hour == 1) ? @"hour" : @"hours";

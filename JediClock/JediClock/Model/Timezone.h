@@ -28,6 +28,7 @@
 @property (weak, nonatomic, readonly) NSString          *formattedName;
 @property (weak, nonatomic, readonly) NSDate            *date;
 @property (assign, nonatomic, readonly) NSTimeInterval  timeInterval;
+@property (assign, nonatomic, readonly) BOOL isDay;
 
 - (NSAttributedString *)attributedStringTimelapse;
 

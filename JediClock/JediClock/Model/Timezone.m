@@ -9,6 +9,9 @@
 #import "Timezone.h"
 #import <MagicalRecord/MagicalRecord.h>
 
+#import "NSAttributedString+Jedi.h"
+#import "NSMutableAttributedString+Jedi.h"
+
 @implementation Timezone
 
 @dynamic city;
@@ -74,12 +77,18 @@
 - (NSAttributedString *)attributedStringTimelapse {
     NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitDay;
+    
     NSDateComponents *localDateComponents = [gregorian components:unit fromDate:[NSDate date] toDate:self.date options:0];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:self.identifier];
     NSLog(@"IS DAYLIGHT SAVING: %@", timeZone.isDaylightSavingTime ? @"YES" : @"NO");
     NSLog(@"COMPONENTS: %@", localDateComponents);
     
-    return nil;
+    NSMutableAttributedString *as = [NSMutableAttributedString new];
+    if (localDateComponents.hour == 0) {
+        [as appendNewAttributedString:@"Today" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
+    }
+    
+    return as;
 }
 
 - (NSDate *)date {
@@ -94,6 +103,15 @@
     NSTimeInterval localTimeInterval = [[NSTimeZone systemTimeZone] secondsFromGMT];
     
     return locationTimeInterval - localTimeInterval;
+}
+
+- (BOOL)isDay {
+    NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger hour = [gregorian component:NSCalendarUnitHour fromDate:self.date];
+    if (hour >= 18 || hour <= 6) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

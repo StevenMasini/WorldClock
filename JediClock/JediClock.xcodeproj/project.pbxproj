@@ -20,7 +20,10 @@
 		90694B1B1B6F9E770066795F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90694B1A1B6F9E770066795F /* Images.xcassets */; };
 		90694B1E1B6F9E770066795F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90694B1C1B6F9E770066795F /* LaunchScreen.xib */; };
 		90694B2A1B6F9E770066795F /* JediClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90694B291B6F9E770066795F /* JediClockTests.m */; };
-		907C3A4A1B750EC900926890 /* UITableView+Sugar.m in Sources */ = {isa = PBXBuildFile; fileRef = 907C3A491B750EC900926890 /* UITableView+Sugar.m */; };
+		90E7A9831B75E138009E159A /* NSAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E7A9821B75E138009E159A /* NSAttributedString+Jedi.m */; };
+		90E7A9861B75E150009E159A /* UITableView+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E7A9851B75E150009E159A /* UITableView+Jedi.m */; };
+		90E7A9891B75E1B8009E159A /* NSMutableAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E7A9881B75E1B8009E159A /* NSMutableAttributedString+Jedi.m */; };
+		90E7A98C1B75E30D009E159A /* UIColor+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E7A98B1B75E30D009E159A /* UIColor+Jedi.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +61,14 @@
 		90694B231B6F9E770066795F /* JediClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JediClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90694B281B6F9E770066795F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90694B291B6F9E770066795F /* JediClockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JediClockTests.m; sourceTree = "<group>"; };
-		907C3A481B750EC900926890 /* UITableView+Sugar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Sugar.h"; sourceTree = "<group>"; };
-		907C3A491B750EC900926890 /* UITableView+Sugar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Sugar.m"; sourceTree = "<group>"; };
+		90E7A9811B75E138009E159A /* NSAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Jedi.h"; sourceTree = "<group>"; };
+		90E7A9821B75E138009E159A /* NSAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Jedi.m"; sourceTree = "<group>"; };
+		90E7A9841B75E150009E159A /* UITableView+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Jedi.h"; sourceTree = "<group>"; };
+		90E7A9851B75E150009E159A /* UITableView+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Jedi.m"; sourceTree = "<group>"; };
+		90E7A9871B75E1B8009E159A /* NSMutableAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+Jedi.h"; sourceTree = "<group>"; };
+		90E7A9881B75E1B8009E159A /* NSMutableAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+Jedi.m"; sourceTree = "<group>"; };
+		90E7A98A1B75E30D009E159A /* UIColor+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Jedi.h"; sourceTree = "<group>"; };
+		90E7A98B1B75E30D009E159A /* UIColor+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Jedi.m"; sourceTree = "<group>"; };
 		D4FB584B97FC67712BD9CE27 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -212,8 +221,14 @@
 		907C3A471B750EAA00926890 /* Categorie */ = {
 			isa = PBXGroup;
 			children = (
-				907C3A481B750EC900926890 /* UITableView+Sugar.h */,
-				907C3A491B750EC900926890 /* UITableView+Sugar.m */,
+				90E7A9811B75E138009E159A /* NSAttributedString+Jedi.h */,
+				90E7A9821B75E138009E159A /* NSAttributedString+Jedi.m */,
+				90E7A9841B75E150009E159A /* UITableView+Jedi.h */,
+				90E7A9851B75E150009E159A /* UITableView+Jedi.m */,
+				90E7A9871B75E1B8009E159A /* NSMutableAttributedString+Jedi.h */,
+				90E7A9881B75E1B8009E159A /* NSMutableAttributedString+Jedi.m */,
+				90E7A98A1B75E30D009E159A /* UIColor+Jedi.h */,
+				90E7A98B1B75E30D009E159A /* UIColor+Jedi.m */,
 			);
 			path = Categorie;
 			sourceTree = "<group>";
@@ -364,13 +379,16 @@
 			files = (
 				905856B41B726097005E6EB0 /* Timezone.m in Sources */,
 				90694B101B6F9E770066795F /* AppDelegate.m in Sources */,
+				90E7A9891B75E1B8009E159A /* NSMutableAttributedString+Jedi.m in Sources */,
 				905856AD1B725DB3005E6EB0 /* TimezoneManager.m in Sources */,
+				90E7A9861B75E150009E159A /* UITableView+Jedi.m in Sources */,
 				905856B11B72607A005E6EB0 /* JediClock.xcdatamodeld in Sources */,
 				905856681B723ED0005E6EB0 /* ClockCell.m in Sources */,
 				9058566D1B723F78005E6EB0 /* TimezonesViewController.m in Sources */,
 				905856691B723ED0005E6EB0 /* HomeViewController.m in Sources */,
+				90E7A98C1B75E30D009E159A /* UIColor+Jedi.m in Sources */,
 				90694B0D1B6F9E770066795F /* main.m in Sources */,
-				907C3A4A1B750EC900926890 /* UITableView+Sugar.m in Sources */,
+				90E7A9831B75E138009E159A /* NSAttributedString+Jedi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

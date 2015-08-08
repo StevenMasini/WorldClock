@@ -258,7 +258,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" prompt="Choose a City." id="Jhd-0X-CyO">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="tm2-sz-0Zx">
+                        <barButtonItem key="leftBarButtonItem" id="tm2-sz-0Zx">
                             <view key="customView" contentMode="scaleToFill" id="olM-we-HeE">
                                 <rect key="frame" x="16" y="30" width="225" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -290,6 +290,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="bottomTableViewConstraint" destination="6rE-fW-RV0" id="LGQ-P4-WUf"/>
                         <outlet property="searchBar" destination="SoS-yr-P51" id="YLu-jW-6ea"/>
                         <outlet property="tableView" destination="g3Z-zM-cCy" id="SjN-LE-wVv"/>
                     </connections>

@@ -8,6 +8,7 @@
 
 #import "ClockCell.h"
 #import "TimezoneManager.h"
+#import "UIColor+Jedi.h"
 
 @interface ClockCell ()
 // clock view
@@ -75,6 +76,12 @@
     }];
 }
 
+- (void)invalidateRefreshLoop {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+
 #pragma mark - UITableViewCell inherited methods
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -98,11 +105,6 @@
     [self.timezone attributedStringTimelapse];
     
     [self setupRefreshViewLoop];
-}
-
-- (void)invalidateRefreshLoop {
-    [self.timer invalidate];
-    self.timer = nil;
 }
 
 #pragma mark - ClockCell setup methods
@@ -137,7 +139,7 @@
 
 - (void)setupRefreshViewLoop {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-                                                     selector:@selector(updateTime)
+                                                     selector:@selector(updateCell)
                                                     userInfo:nil repeats:YES];
     [self.timer fire];
 }
@@ -155,6 +157,7 @@
         
         UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
         hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        hourLabel.backgroundColor = [UIColor clearColor];
         
         NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
         hourLabel.text = @(time).stringValue;
@@ -167,22 +170,50 @@
 
 #pragma mark - ClockCell update methods
 
-- (void)updateTime {
+
+/**
+ *  @author Steven Masini, 08-Aug-2015
+ *
+ *  @brief  Update cell
+ */
+- (void)updateCell {
     // 1) retrieve the right time
     NSDate *date = self.timezone.date;
+    if (!date) {
+        return;
+    }
     
     // 2) setup the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"HH:mm";
     self.numericClockLabel.text = [dateFormatter stringFromDate:date];
     
-    // 3) setup the time for the analog clock
+    // 3) setup clock color according to the day/night
+    BOOL isDay = self.timezone.isDay;
+    self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
+    self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+    self.hourHandView.backgroundColor   = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+    for (UIView *subview in self.clockView.subviews) {
+        if ([subview isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel *)subview;
+            label.textColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+        }
+    }
+    
+    // 4) setup the time for the analog clock
     NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
     [UIView animateWithDuration:0.1f animations:^{
         [self updateClockHandsWithDateComponents:dateComponents];
     }];
 }
 
+/**
+ *  @author Steven Masini, 08-Aug-2015
+ *
+ *  @brief  Update the hands postion
+ *
+ *  @param dateComponents The data components that containt the second, minute and hour
+ */
 - (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
     NSInteger second    = dateComponents.second;
     NSInteger minute    = dateComponents.minute;

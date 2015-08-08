@@ -9,7 +9,7 @@
 #import "HomeViewController.h"
 #import "ClockCell.h"
 #import "TimezoneManager.h"
-#import "UITableView+Sugar.h"
+#import "UITableView+Jedi.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 // gesture
@@ -79,7 +79,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     if (indexPath.section == 0) {
         return tableView.rowHeight;
     }
-    return tableView.sugar_allAvailableSpace;
+    return tableView.jedi_allAvailableSpace;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,13 +141,6 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 #pragma mark - UITableViewDelegate
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView.editing) {
-        return UITableViewCellEditingStyleDelete;
-    }
-    return UITableViewCellEditingStyleNone;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.1f;

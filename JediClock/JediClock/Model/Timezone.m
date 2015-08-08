@@ -75,14 +75,14 @@
 }
 
 - (NSAttributedString *)attributedStringTimelapse {
+    // 1) extract the components from the date
     NSCalendar *gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitDay;
-    
-    NSDateComponents *localDateComponents = [gregorian components:unit
+    NSDateComponents *localDateComponents = [gregorian components:NSCalendarUnitDay
                                                          fromDate:[NSDate date]
                                                            toDate:self.date
                                                           options:0];
     
+    // 2) define rather it's yesterday, today or tomorrow back there
     NSMutableAttributedString *as = [NSMutableAttributedString new];
     NSInteger day = localDateComponents.day;
     if (day == 0) {
@@ -93,19 +93,15 @@
         [as appendNewAttributedString:@"Yesterday" attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
     }
     
-    NSTimeZone *destinationTimeZone = [NSTimeZone timeZoneWithName:self.identifier];
-    BOOL isDayLightSavingTime = destinationTimeZone.isDaylightSavingTime;
-    NSLog(@"%@ - %@ \rDAYLIGHT: %@", self.city, localDateComponents, isDayLightSavingTime ? @"YES" : @"NO");
-    
-    NSInteger hour = localDateComponents.hour;
+    // 4) define the text to display according to the time, and the daylight saving policy
+    NSInteger hour = self.timeInterval / 3600;
     if (hour > 0) {
-        hour = hour + (isDayLightSavingTime ? 1 : 0);
         [as appendNewAttributedString:@", " attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
         NSString *hourText = (hour == 1) ? @"hour" : @"hours";
         NSString *aheadText = [NSString stringWithFormat:@"%@ %@ ahead", @(hour), hourText];
         [as appendNewAttributedString:aheadText attributes:@{ASFONT(@"HelveticaNeue", 14.0f)}];
     } else if (hour < 0) {
-        hour = (hour * -1) + (isDayLightSavingTime ? 1 : 0);
+        hour = hour * -1;
         [as appendNewAttributedString:@", " attributes:@{ASFONT(@"HelveticaNeue-Bold", 14.0f)}];
         NSString *hourText = (hour == -1) ? @"hour" : @"hours";
         NSString *behindText = [NSString stringWithFormat:@"%@ %@ behind", @(hour), hourText];

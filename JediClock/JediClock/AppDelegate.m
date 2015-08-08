@@ -16,9 +16,11 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // 1) setup core data
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"JediClock"];
     
-    [[TimezoneManager sharedManager] setupTimezoneDatabase];
+    // 2) retrieve the timezone from the system
+    [TimezoneManager setupTimezoneDatabase];
     
     return YES;
 }

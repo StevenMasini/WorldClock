@@ -11,14 +11,6 @@
 #import "Timezone.h"
 
 @interface TimezoneManager : NSObject
-@property (nonatomic, strong) NSManagedObjectContext *context;
-
-// singleton
-+ (TimezoneManager *)sharedManager;
-
 // setup
-- (void)setupTimezoneDatabase;
-
-+ (NSDateComponents *)dateComponentsFromDate:(NSDate *)date;
-
++ (void)setupTimezoneDatabase;
 @end

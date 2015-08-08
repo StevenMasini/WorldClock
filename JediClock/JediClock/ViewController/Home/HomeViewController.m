@@ -122,9 +122,9 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
             NSIndexPath *noClockIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
             [self.tableView insertRowsAtIndexPaths:@[noClockIndexPath]
                                   withRowAnimation:UITableViewRowAnimationAutomatic];
-            self.editBarButtonItem.title = @"";
-            self.tableView.editing = NO;
-            self.tableView.scrollEnabled = NO;
+            self.editBarButtonItem.title    = @"";
+            self.tableView.editing          = NO;
+            self.tableView.scrollEnabled    = NO;
         }
         [self.tableView endUpdates];
     }

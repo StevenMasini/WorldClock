@@ -102,8 +102,6 @@
     self.timeInterval = [timezone timeInterval];
     self.titleLabel.text = timezone.city;
     
-    [self.timezone attributedStringTimelapse];
-    
     [self setupRefreshViewLoop];
 }
 
@@ -137,13 +135,6 @@
     self.hourHandView.layer.shouldRasterize     = YES;
 }
 
-- (void)setupRefreshViewLoop {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-                                                     selector:@selector(updateCell)
-                                                    userInfo:nil repeats:YES];
-    [self.timer fire];
-}
-
 - (void)setupClockNumbers {
     float PI2 = M_PI * 2.0f;
     CGSize clockSize = self.clockView.frame.size;
@@ -168,14 +159,15 @@
     }
 }
 
+- (void)setupRefreshViewLoop {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+                                                selector:@selector(updateCell)
+                                                userInfo:nil repeats:YES];
+    [self.timer fire];
+}
+
 #pragma mark - ClockCell update methods
 
-
-/**
- *  @author Steven Masini, 08-Aug-2015
- *
- *  @brief  Update cell
- */
 - (void)updateCell {
     // 1) retrieve the right time
     NSDate *date = self.timezone.date;
@@ -205,7 +197,9 @@
     self.detailTitleLabel.attributedText = [self.timezone attributedStringTimelapse];
     
     // 5) update the hands position for the analog clock
-    NSDateComponents *dateComponents = [TimezoneManager dateComponentsFromDate:date];
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendarUnit unit = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateComponents *dateComponents = [calendar components:unit fromDate:date];
     [UIView animateWithDuration:0.1f animations:^{
         [self updateClockHandsWithDateComponents:dateComponents];
     }];

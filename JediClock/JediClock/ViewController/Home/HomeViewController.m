@@ -112,11 +112,20 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Timezone *timezone = self.timezones[indexPath.row];
         timezone.order = @(-1);
-        [timezone.managedObjectContext MR_saveToPersistentStoreAndWait];
         
         [self.timezones removeObjectAtIndex:indexPath.row];
         [self.tableView beginUpdates];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        // re-arrange the order for every object
+        for (NSInteger i = 0; i < self.timezones.count; i++) {
+            Timezone *t = self.timezones[i];
+            t.order = @(i);
+        }
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        
+        
         
         // avoid a crash if there is no more timezone to display
         if (self.timezones.count == 0) {

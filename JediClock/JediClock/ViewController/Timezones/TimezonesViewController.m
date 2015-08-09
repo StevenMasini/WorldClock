@@ -124,8 +124,14 @@ static NSString *cellIdentifier = @"TimezoneCell";
     }
     NSLog(@"NAME: %@", timezone.city);
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate]);
+    NSPredicate *checkPredicate = [NSPredicate predicateWithFormat:@"identifier LIKE %@", timezone.identifier];
+    if ([Timezone MR_countOfEntitiesWithPredicate:checkPredicate]) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+        return;
+    }
+    
+    NSPredicate *orderPredicate = [NSPredicate predicateWithFormat:@"order > -1"];
+    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:orderPredicate]);
     NSLog(@"ORDER: %@", timezone.order);
     
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {

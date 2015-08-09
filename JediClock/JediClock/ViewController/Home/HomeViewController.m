@@ -89,6 +89,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         cell.showsReorderControl = YES;
         
         Timezone *timezone = self.timezones[indexPath.row];
+        NSLog(@"ORDER: %@", timezone.order);
         cell.shouldDisplayNumericClock = self.shouldDisplayNumericClock;
         cell.timezone = timezone;
         
@@ -131,13 +132,18 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    Timezone *timezoneToMove = [self.timezones objectAtIndex:sourceIndexPath.row];
+    Timezone *sourceTimezone        = [self.timezones objectAtIndex:sourceIndexPath.row];
     
     [self.timezones removeObjectAtIndex:sourceIndexPath.row];
-    [self.timezones insertObject:timezoneToMove atIndex:destinationIndexPath.row];
+    [self.timezones insertObject:sourceTimezone atIndex:destinationIndexPath.row];
     
-    timezoneToMove.order = @(destinationIndexPath.row + 1);
-    [timezoneToMove.managedObjectContext MR_saveToPersistentStoreAndWait];
+    // re-arrange the order for every object
+    for (NSInteger i = 0; i < self.timezones.count; i++) {
+        Timezone *t = self.timezones[i];
+        t.order = @(i);
+    }
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - UITableViewDelegate

@@ -122,16 +122,15 @@ static NSString *cellIdentifier = @"TimezoneCell";
     } else {
         timezone = [self.timezones objectAtIndexPath:indexPath];
     }
-    NSLog(@"NAME: %@", timezone.city);
     
-    NSPredicate *checkPredicate = [NSPredicate predicateWithFormat:@"identifier LIKE %@", timezone.identifier];
-    if ([Timezone MR_countOfEntitiesWithPredicate:checkPredicate]) {
+    if (timezone.order.integerValue > -1) {
         [self dismissViewControllerAnimated:YES completion:NULL];
         return;
     }
     
-    NSPredicate *orderPredicate = [NSPredicate predicateWithFormat:@"order > -1"];
-    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:orderPredicate]);
+    NSLog(@"NAME: %@", timezone.city);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
+    timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate]);
     NSLog(@"ORDER: %@", timezone.order);
     
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {

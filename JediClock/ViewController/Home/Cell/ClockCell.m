@@ -35,6 +35,8 @@
 @implementation ClockCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     // 1) setup the circles rendering
     [self setupCircles];
     

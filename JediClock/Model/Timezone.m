@@ -81,8 +81,6 @@
     NSDateComponents *hereComponents    = [gregorian components:unit fromDate:[NSDate date]];
     NSDateComponents *thereComponents   = [gregorian components:unit fromDate:self.date];
     
-    NSLog(@"");
-    
     // 2) define rather it's yesterday, today or tomorrow back there
     NSMutableAttributedString *as = [NSMutableAttributedString new];
     NSInteger day = thereComponents.day - hereComponents.day;

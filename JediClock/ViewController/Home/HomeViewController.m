@@ -58,7 +58,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 - (void)dealloc {
-    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
+//    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
 }
 
 #pragma mark - UITableViewDataSource
@@ -89,7 +89,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         cell.showsReorderControl = YES;
         
         Timezone *timezone = self.timezones[indexPath.row];
-        NSLog(@"ORDER: %@", timezone.order);
+//        NSLog(@"ORDER: %@", timezone.order);
         cell.shouldDisplayNumericClock = self.shouldDisplayNumericClock;
         cell.timezone = timezone;
         

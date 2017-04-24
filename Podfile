@@ -6,4 +6,6 @@ inhibit_all_warnings!
 workspace 'JediClock'
 xcodeproj 'JediClock.xcodeproj'
 
-pod 'MagicalRecord'
+target 'JediClock' do
+	pod 'MagicalRecord', '2.3.0'
+end

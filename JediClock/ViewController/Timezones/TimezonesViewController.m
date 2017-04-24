@@ -49,7 +49,7 @@ static NSString *cellIdentifier = @"TimezoneCell";
 }
 
 - (void)dealloc {
-    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
+//    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -128,10 +128,10 @@ static NSString *cellIdentifier = @"TimezoneCell";
         return;
     }
     
-    NSLog(@"NAME: %@", timezone.city);
+//    NSLog(@"NAME: %@", timezone.city);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order > -1"];
     timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate]);
-    NSLog(@"ORDER: %@", timezone.order);
+//    NSLog(@"ORDER: %@", timezone.order);
     
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
         [self dismissViewControllerAnimated:YES completion:NULL];

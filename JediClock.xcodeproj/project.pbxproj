@@ -8,16 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		89071F22FA6E1A3A03F50A42 /* libPods-JediClock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FFE5C2B4BEA0A50B86246F6 /* libPods-JediClock.a */; };
-		901DB5041EADA71F00A20D5C /* JediClock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4E21EADA71F00A20D5C /* JediClock.xcdatamodeld */; };
-		901DB5051EADA71F00A20D5C /* Timezone.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4E51EADA71F00A20D5C /* Timezone.m */; };
-		901DB5061EADA71F00A20D5C /* ClockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4EA1EADA71F00A20D5C /* ClockCell.m */; };
-		901DB5071EADA71F00A20D5C /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4EC1EADA71F00A20D5C /* HomeViewController.m */; };
-		901DB5081EADA71F00A20D5C /* TimezonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4EF1EADA71F00A20D5C /* TimezonesViewController.m */; };
-		901DB5091EADA71F00A20D5C /* TimezoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4F21EADA71F00A20D5C /* TimezoneManager.m */; };
-		901DB50A1EADA71F00A20D5C /* NSAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4F51EADA71F00A20D5C /* NSAttributedString+Jedi.m */; };
-		901DB50B1EADA71F00A20D5C /* NSMutableAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4F71EADA71F00A20D5C /* NSMutableAttributedString+Jedi.m */; };
-		901DB50C1EADA71F00A20D5C /* UIColor+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4F91EADA71F00A20D5C /* UIColor+Jedi.m */; };
-		901DB50D1EADA71F00A20D5C /* UITableView+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB4FB1EADA71F00A20D5C /* UITableView+Jedi.m */; };
+		9001C38D1EB4D5150089B2B5 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3721EB4D5150089B2B5 /* HomeViewController.m */; };
+		9001C38E1EB4D5150089B2B5 /* TimezonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3751EB4D5150089B2B5 /* TimezonesViewController.m */; };
+		9001C38F1EB4D5150089B2B5 /* ClockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3791EB4D5150089B2B5 /* ClockCell.m */; };
+		9001C3901EB4D5150089B2B5 /* ClockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C37B1EB4D5150089B2B5 /* ClockView.m */; };
+		9001C3911EB4D5150089B2B5 /* NSAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C37E1EB4D5150089B2B5 /* NSAttributedString+Jedi.m */; };
+		9001C3921EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3801EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.m */; };
+		9001C3931EB4D5150089B2B5 /* UIColor+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3821EB4D5150089B2B5 /* UIColor+Jedi.m */; };
+		9001C3941EB4D5150089B2B5 /* UITableView+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3841EB4D5150089B2B5 /* UITableView+Jedi.m */; };
+		9001C3951EB4D5150089B2B5 /* TimezoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3871EB4D5150089B2B5 /* TimezoneManager.m */; };
+		9001C3961EB4D5150089B2B5 /* JediClock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3891EB4D5150089B2B5 /* JediClock.xcdatamodeld */; };
+		9001C3971EB4D5150089B2B5 /* Timezone.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C38C1EB4D5150089B2B5 /* Timezone.m */; };
 		901DB50E1EADA71F00A20D5C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 901DB4FC1EADA71F00A20D5C /* Images.xcassets */; };
 		901DB50F1EADA71F00A20D5C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 901DB4FE1EADA71F00A20D5C /* LaunchScreen.xib */; };
 		901DB5101EADA71F00A20D5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 901DB5001EADA71F00A20D5C /* Main.storyboard */; };
@@ -40,25 +41,27 @@
 		3795B7621564F091983EBD7C /* Pods-JediClock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JediClock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JediClock/Pods-JediClock.debug.xcconfig"; sourceTree = "<group>"; };
 		449DF8C234A77EF6AD0518F4 /* Pods-JediClock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JediClock.release.xcconfig"; path = "Pods/Target Support Files/Pods-JediClock/Pods-JediClock.release.xcconfig"; sourceTree = "<group>"; };
 		6FFE5C2B4BEA0A50B86246F6 /* libPods-JediClock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JediClock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		901DB4E31EADA71F00A20D5C /* JediClock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JediClock.xcdatamodel; sourceTree = "<group>"; };
-		901DB4E41EADA71F00A20D5C /* Timezone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timezone.h; sourceTree = "<group>"; };
-		901DB4E51EADA71F00A20D5C /* Timezone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timezone.m; sourceTree = "<group>"; };
-		901DB4E91EADA71F00A20D5C /* ClockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClockCell.h; sourceTree = "<group>"; };
-		901DB4EA1EADA71F00A20D5C /* ClockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClockCell.m; sourceTree = "<group>"; };
-		901DB4EB1EADA71F00A20D5C /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		901DB4EC1EADA71F00A20D5C /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		901DB4EE1EADA71F00A20D5C /* TimezonesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimezonesViewController.h; sourceTree = "<group>"; };
-		901DB4EF1EADA71F00A20D5C /* TimezonesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimezonesViewController.m; sourceTree = "<group>"; };
-		901DB4F11EADA71F00A20D5C /* TimezoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimezoneManager.h; sourceTree = "<group>"; };
-		901DB4F21EADA71F00A20D5C /* TimezoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimezoneManager.m; sourceTree = "<group>"; };
-		901DB4F41EADA71F00A20D5C /* NSAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Jedi.h"; sourceTree = "<group>"; };
-		901DB4F51EADA71F00A20D5C /* NSAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Jedi.m"; sourceTree = "<group>"; };
-		901DB4F61EADA71F00A20D5C /* NSMutableAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+Jedi.h"; sourceTree = "<group>"; };
-		901DB4F71EADA71F00A20D5C /* NSMutableAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+Jedi.m"; sourceTree = "<group>"; };
-		901DB4F81EADA71F00A20D5C /* UIColor+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Jedi.h"; sourceTree = "<group>"; };
-		901DB4F91EADA71F00A20D5C /* UIColor+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Jedi.m"; sourceTree = "<group>"; };
-		901DB4FA1EADA71F00A20D5C /* UITableView+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Jedi.h"; sourceTree = "<group>"; };
-		901DB4FB1EADA71F00A20D5C /* UITableView+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Jedi.m"; sourceTree = "<group>"; };
+		9001C3711EB4D5150089B2B5 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		9001C3721EB4D5150089B2B5 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		9001C3741EB4D5150089B2B5 /* TimezonesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimezonesViewController.h; sourceTree = "<group>"; };
+		9001C3751EB4D5150089B2B5 /* TimezonesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimezonesViewController.m; sourceTree = "<group>"; };
+		9001C3781EB4D5150089B2B5 /* ClockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClockCell.h; sourceTree = "<group>"; };
+		9001C3791EB4D5150089B2B5 /* ClockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClockCell.m; sourceTree = "<group>"; };
+		9001C37A1EB4D5150089B2B5 /* ClockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClockView.h; sourceTree = "<group>"; };
+		9001C37B1EB4D5150089B2B5 /* ClockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClockView.m; sourceTree = "<group>"; };
+		9001C37D1EB4D5150089B2B5 /* NSAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Jedi.h"; sourceTree = "<group>"; };
+		9001C37E1EB4D5150089B2B5 /* NSAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Jedi.m"; sourceTree = "<group>"; };
+		9001C37F1EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+Jedi.h"; sourceTree = "<group>"; };
+		9001C3801EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+Jedi.m"; sourceTree = "<group>"; };
+		9001C3811EB4D5150089B2B5 /* UIColor+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Jedi.h"; sourceTree = "<group>"; };
+		9001C3821EB4D5150089B2B5 /* UIColor+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Jedi.m"; sourceTree = "<group>"; };
+		9001C3831EB4D5150089B2B5 /* UITableView+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Jedi.h"; sourceTree = "<group>"; };
+		9001C3841EB4D5150089B2B5 /* UITableView+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Jedi.m"; sourceTree = "<group>"; };
+		9001C3861EB4D5150089B2B5 /* TimezoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimezoneManager.h; sourceTree = "<group>"; };
+		9001C3871EB4D5150089B2B5 /* TimezoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimezoneManager.m; sourceTree = "<group>"; };
+		9001C38A1EB4D5150089B2B5 /* JediClock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JediClock.xcdatamodel; sourceTree = "<group>"; };
+		9001C38B1EB4D5150089B2B5 /* Timezone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timezone.h; sourceTree = "<group>"; };
+		9001C38C1EB4D5150089B2B5 /* Timezone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timezone.m; sourceTree = "<group>"; };
 		901DB4FC1EADA71F00A20D5C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		901DB4FF1EADA71F00A20D5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		901DB5011EADA71F00A20D5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
@@ -108,75 +111,84 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		901DB4E11EADA71F00A20D5C /* Model */ = {
+		9001C36F1EB4D5150089B2B5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4E21EADA71F00A20D5C /* JediClock.xcdatamodeld */,
-				901DB4E41EADA71F00A20D5C /* Timezone.h */,
-				901DB4E51EADA71F00A20D5C /* Timezone.m */,
+				9001C3701EB4D5150089B2B5 /* Home */,
+				9001C3731EB4D5150089B2B5 /* Timezones */,
 			);
-			path = Model;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		901DB4E61EADA71F00A20D5C /* ViewController */ = {
+		9001C3701EB4D5150089B2B5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4E71EADA71F00A20D5C /* Home */,
-				901DB4ED1EADA71F00A20D5C /* Timezones */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		901DB4E71EADA71F00A20D5C /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				901DB4E81EADA71F00A20D5C /* Cell */,
-				901DB4EB1EADA71F00A20D5C /* HomeViewController.h */,
-				901DB4EC1EADA71F00A20D5C /* HomeViewController.m */,
+				9001C3711EB4D5150089B2B5 /* HomeViewController.h */,
+				9001C3721EB4D5150089B2B5 /* HomeViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		901DB4E81EADA71F00A20D5C /* Cell */ = {
+		9001C3731EB4D5150089B2B5 /* Timezones */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4E91EADA71F00A20D5C /* ClockCell.h */,
-				901DB4EA1EADA71F00A20D5C /* ClockCell.m */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		901DB4ED1EADA71F00A20D5C /* Timezones */ = {
-			isa = PBXGroup;
-			children = (
-				901DB4EE1EADA71F00A20D5C /* TimezonesViewController.h */,
-				901DB4EF1EADA71F00A20D5C /* TimezonesViewController.m */,
+				9001C3741EB4D5150089B2B5 /* TimezonesViewController.h */,
+				9001C3751EB4D5150089B2B5 /* TimezonesViewController.m */,
 			);
 			path = Timezones;
 			sourceTree = "<group>";
 		};
-		901DB4F01EADA71F00A20D5C /* Manager */ = {
+		9001C3761EB4D5150089B2B5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4F11EADA71F00A20D5C /* TimezoneManager.h */,
-				901DB4F21EADA71F00A20D5C /* TimezoneManager.m */,
+				9001C3771EB4D5150089B2B5 /* Cell */,
+				9001C37A1EB4D5150089B2B5 /* ClockView.h */,
+				9001C37B1EB4D5150089B2B5 /* ClockView.m */,
 			);
-			path = Manager;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		901DB4F31EADA71F00A20D5C /* Categorie */ = {
+		9001C3771EB4D5150089B2B5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4F41EADA71F00A20D5C /* NSAttributedString+Jedi.h */,
-				901DB4F51EADA71F00A20D5C /* NSAttributedString+Jedi.m */,
-				901DB4F61EADA71F00A20D5C /* NSMutableAttributedString+Jedi.h */,
-				901DB4F71EADA71F00A20D5C /* NSMutableAttributedString+Jedi.m */,
-				901DB4F81EADA71F00A20D5C /* UIColor+Jedi.h */,
-				901DB4F91EADA71F00A20D5C /* UIColor+Jedi.m */,
-				901DB4FA1EADA71F00A20D5C /* UITableView+Jedi.h */,
-				901DB4FB1EADA71F00A20D5C /* UITableView+Jedi.m */,
+				9001C3781EB4D5150089B2B5 /* ClockCell.h */,
+				9001C3791EB4D5150089B2B5 /* ClockCell.m */,
 			);
-			path = Categorie;
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		9001C37C1EB4D5150089B2B5 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9001C37D1EB4D5150089B2B5 /* NSAttributedString+Jedi.h */,
+				9001C37E1EB4D5150089B2B5 /* NSAttributedString+Jedi.m */,
+				9001C37F1EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.h */,
+				9001C3801EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.m */,
+				9001C3811EB4D5150089B2B5 /* UIColor+Jedi.h */,
+				9001C3821EB4D5150089B2B5 /* UIColor+Jedi.m */,
+				9001C3831EB4D5150089B2B5 /* UITableView+Jedi.h */,
+				9001C3841EB4D5150089B2B5 /* UITableView+Jedi.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		9001C3851EB4D5150089B2B5 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9001C3861EB4D5150089B2B5 /* TimezoneManager.h */,
+				9001C3871EB4D5150089B2B5 /* TimezoneManager.m */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		9001C3881EB4D5150089B2B5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9001C3891EB4D5150089B2B5 /* JediClock.xcdatamodeld */,
+				9001C38B1EB4D5150089B2B5 /* Timezone.h */,
+				9001C38C1EB4D5150089B2B5 /* Timezone.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		901DB4FD1EADA71F00A20D5C /* Base.lproj */ = {
@@ -211,15 +223,16 @@
 		90694B091B6F9E770066795F /* JediClock */ = {
 			isa = PBXGroup;
 			children = (
-				901DB4E11EADA71F00A20D5C /* Model */,
-				901DB4E61EADA71F00A20D5C /* ViewController */,
-				901DB4F01EADA71F00A20D5C /* Manager */,
-				901DB4F31EADA71F00A20D5C /* Categorie */,
-				901DB4FC1EADA71F00A20D5C /* Images.xcassets */,
-				901DB4FD1EADA71F00A20D5C /* Base.lproj */,
-				901DB5021EADA71F00A20D5C /* AppDelegate.m */,
 				901DB5031EADA71F00A20D5C /* AppDelegate.h */,
+				901DB5021EADA71F00A20D5C /* AppDelegate.m */,
+				901DB4FD1EADA71F00A20D5C /* Base.lproj */,
+				9001C37C1EB4D5150089B2B5 /* Categories */,
+				901DB4FC1EADA71F00A20D5C /* Images.xcassets */,
+				9001C3851EB4D5150089B2B5 /* Managers */,
+				9001C3881EB4D5150089B2B5 /* Models */,
 				90694B0A1B6F9E770066795F /* Supporting Files */,
+				9001C36F1EB4D5150089B2B5 /* ViewControllers */,
+				9001C3761EB4D5150089B2B5 /* Views */,
 			);
 			path = JediClock;
 			sourceTree = "<group>";
@@ -402,18 +415,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				901DB5041EADA71F00A20D5C /* JediClock.xcdatamodeld in Sources */,
-				901DB50D1EADA71F00A20D5C /* UITableView+Jedi.m in Sources */,
+				9001C3931EB4D5150089B2B5 /* UIColor+Jedi.m in Sources */,
+				9001C3921EB4D5150089B2B5 /* NSMutableAttributedString+Jedi.m in Sources */,
 				90694B0D1B6F9E770066795F /* main.m in Sources */,
-				901DB5091EADA71F00A20D5C /* TimezoneManager.m in Sources */,
-				901DB50A1EADA71F00A20D5C /* NSAttributedString+Jedi.m in Sources */,
-				901DB5061EADA71F00A20D5C /* ClockCell.m in Sources */,
-				901DB5081EADA71F00A20D5C /* TimezonesViewController.m in Sources */,
-				901DB5071EADA71F00A20D5C /* HomeViewController.m in Sources */,
+				9001C3951EB4D5150089B2B5 /* TimezoneManager.m in Sources */,
+				9001C3941EB4D5150089B2B5 /* UITableView+Jedi.m in Sources */,
+				9001C38F1EB4D5150089B2B5 /* ClockCell.m in Sources */,
+				9001C38E1EB4D5150089B2B5 /* TimezonesViewController.m in Sources */,
+				9001C3911EB4D5150089B2B5 /* NSAttributedString+Jedi.m in Sources */,
+				9001C3901EB4D5150089B2B5 /* ClockView.m in Sources */,
 				901DB5111EADA71F00A20D5C /* AppDelegate.m in Sources */,
-				901DB50B1EADA71F00A20D5C /* NSMutableAttributedString+Jedi.m in Sources */,
-				901DB5051EADA71F00A20D5C /* Timezone.m in Sources */,
-				901DB50C1EADA71F00A20D5C /* UIColor+Jedi.m in Sources */,
+				9001C3961EB4D5150089B2B5 /* JediClock.xcdatamodeld in Sources */,
+				9001C38D1EB4D5150089B2B5 /* HomeViewController.m in Sources */,
+				9001C3971EB4D5150089B2B5 /* Timezone.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,12 +651,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		901DB4E21EADA71F00A20D5C /* JediClock.xcdatamodeld */ = {
+		9001C3891EB4D5150089B2B5 /* JediClock.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				901DB4E31EADA71F00A20D5C /* JediClock.xcdatamodel */,
+				9001C38A1EB4D5150089B2B5 /* JediClock.xcdatamodel */,
 			);
-			currentVersion = 901DB4E31EADA71F00A20D5C /* JediClock.xcdatamodel */;
+			currentVersion = 9001C38A1EB4D5150089B2B5 /* JediClock.xcdatamodel */;
 			path = JediClock.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

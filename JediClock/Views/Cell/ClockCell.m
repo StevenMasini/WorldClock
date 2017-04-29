@@ -37,15 +37,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    // 1) setup the circles rendering
-    [self setupCircles];
-    
-    // 2) setup the hands rendering
-    [self setupHands];
-    
-    // 3) put the numbers on the clock
-    [self setupClockNumbers];
-    
     self.clockView.alpha           = self.shouldDisplayNumericClock ? 0.0f : 1.0f;
     self.numericClockLabel.alpha   = self.shouldDisplayNumericClock ? 1.0f : 0.0f;
     
@@ -104,69 +95,10 @@
     self.timeInterval = [timezone timeInterval];
     self.titleLabel.text = timezone.city;
     
-    [self setupRefreshViewLoop];
+//    [self setupRefreshViewLoop];
 }
 
-#pragma mark - ClockCell setup methods
 
-- (void)setupCircles {
-    self.clockView.layer.cornerRadius       = self.clockView.frame.size.width / 2.0f;
-    self.centerView.layer.cornerRadius      = self.centerView.frame.size.width / 2.0f;
-    self.redCenterView.layer.cornerRadius   = self.redCenterView.frame.size.width / 2.0f;
-}
-
-- (void)setupHands {
-    // setup hands view anchor point
-    self.secondHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
-    self.minuteHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
-    self.hourHandView.layer.anchorPoint     = CGPointMake(0.5f, 1.0f);
-    
-    // setup anti-aliasing for hands
-    self.secondHandView.layer.borderColor       = [UIColor clearColor].CGColor;
-    self.secondHandView.layer.borderWidth       = 1.0f;
-    self.secondHandView.layer.shouldRasterize   = YES;
-    
-    self.minuteHandView.layer.borderColor       = [UIColor clearColor].CGColor;
-    self.minuteHandView.layer.borderWidth       = 0.5f;
-    self.minuteHandView.layer.cornerRadius      = 1.0f;
-    self.minuteHandView.layer.shouldRasterize   = YES;
-    
-    self.hourHandView.layer.borderColor         = [UIColor clearColor].CGColor;
-    self.hourHandView.layer.borderWidth         = 0.5f;
-    self.hourHandView.layer.cornerRadius        = 1.0f;
-    self.hourHandView.layer.shouldRasterize     = YES;
-}
-
-- (void)setupClockNumbers {
-    float PI2 = M_PI * 2.0f;
-    CGSize clockSize = self.clockView.frame.size;
-    CGPoint c = CGPointMake((clockSize.width) / 2.0f, (clockSize.height) / 2.0f);
-    CGFloat r = (self.clockView.frame.size.width) / 2.0f;
-    
-    for (NSInteger i = 0; i < 12; i++) {
-        CGFloat x = ((c.x - 6) + (r - 9) * cos((PI2 / 12.0f) * i));
-        CGFloat y = ((c.y - 6) + (r - 9) * sin((PI2 / 12.0f) * i));
-        CGRect frame = CGRectMake(x, y, 12.0f, 12.0f);
-        
-        UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
-        hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
-        hourLabel.backgroundColor = [UIColor clearColor];
-        
-        NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
-        hourLabel.text = @(time).stringValue;
-        hourLabel.textColor = [UIColor whiteColor];
-        hourLabel.textAlignment = NSTextAlignmentCenter;
-        
-        [self.clockView addSubview:hourLabel];
-    }
-}
-
-- (void)setupRefreshViewLoop {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-                                                selector:@selector(updateCell)
-                                                userInfo:nil repeats:YES];
-    [self.timer fire];
-}
 
 #pragma mark - ClockCell update methods
 

@@ -9,17 +9,12 @@
 #import "ClockCell.h"
 #import "TimezoneManager.h"
 #import "UIColor+Jedi.h"
+#import "ClockView.h"
 
 @interface ClockCell ()
-// clock view
-@property (weak, nonatomic) IBOutlet UIView *clockView;
-@property (weak, nonatomic) IBOutlet UIView *centerView;
-@property (weak, nonatomic) IBOutlet UIView *redCenterView;
 
-// hands views
-@property (weak, nonatomic) IBOutlet UIView *secondHandView;
-@property (weak, nonatomic) IBOutlet UIView *minuteHandView;
-@property (weak, nonatomic) IBOutlet UIView *hourHandView;
+// clock view
+@property (weak, nonatomic) IBOutlet ClockView *clockView;
 
 // title view
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLabel;
@@ -62,11 +57,11 @@
 - (void)switchClockToNumeric {
     self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
     
-    __weak typeof(self) wself = self;
-    [UIView animateWithDuration:0.25f animations:^{
-        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
-        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
-    }];
+//    __weak typeof(self) wself = self;
+//    [UIView animateWithDuration:0.25f animations:^{
+//        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
+//        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
+//    }];
 }
 
 - (void)invalidateRefreshLoop {
@@ -80,11 +75,11 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    __weak typeof(self) wself = self;
-    [UIView animateWithDuration:0.25f animations:^{
-        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
-        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
-    }];
+//    __weak typeof(self) wself = self;
+//    [UIView animateWithDuration:0.25f animations:^{
+//        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+//        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+//    }];
 }
 
 #pragma mark - ClockCell setter methods
@@ -115,17 +110,17 @@
     self.numericClockLabel.text = [dateFormatter stringFromDate:date];
     
     // 3) update clock color according to the day/night
-    BOOL isDay = self.timezone.isDay;
-    self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
-    self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-    self.hourHandView.backgroundColor   = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-    self.centerView.backgroundColor     = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-    for (UIView *subview in self.clockView.subviews) {
-        if ([subview isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)subview;
-            label.textColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-        }
-    }
+//    BOOL isDay = self.timezone.isDay;
+//    self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
+//    self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+//    self.hourHandView.backgroundColor   = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+//    self.centerView.backgroundColor     = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+//    for (UIView *subview in self.clockView.subviews) {
+//        if ([subview isKindOfClass:[UILabel class]]) {
+//            UILabel *label = (UILabel *)subview;
+//            label.textColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
+//        }
+//    }
     
     // 4) update the detail text
     self.detailTitleLabel.attributedText = [self.timezone attributedStringTimelapse];
@@ -147,18 +142,18 @@
  *  @param dateComponents The data components that containt the second, minute and hour
  */
 - (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
-    NSInteger second    = dateComponents.second;
-    NSInteger minute    = dateComponents.minute;
-    NSInteger hour      = dateComponents.hour;
+//    NSInteger second    = dateComponents.second;
+//    NSInteger minute    = dateComponents.minute;
+//    NSInteger hour      = dateComponents.hour;
     
-    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
-    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
-    
-    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
-    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
-    
-    CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
-    self.hourHandView.transform     = CGAffineTransformMakeRotation(hourAngle);
+//    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
+//    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
+//    
+//    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
+//    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
+//    
+//    CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
+//    self.hourHandView.transform     = CGAffineTransformMakeRotation(hourAngle);
 }
 
 @end

@@ -73,6 +73,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="clockView" destination="FIV-mF-nf6" id="OQ1-OI-IrZ"/>
                                             <outlet property="detailTitleLabel" destination="HHo-Eu-xn0" id="Izl-OZ-77Y"/>
                                             <outlet property="numericClockLabel" destination="MtA-vZ-3oc" id="uUl-fu-r3f"/>
                                             <outlet property="titleLabel" destination="dpK-Xd-skL" id="eZo-c2-mIh"/>

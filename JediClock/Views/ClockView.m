@@ -45,6 +45,8 @@
     self.clockLayer.path = path.CGPath;
     self.clockLayer.fillColor = [UIColor blackColor].CGColor;
     
+    [self.layer addSublayer:self.clockLayer];
+    
 //    self.centerView.layer.cornerRadius      = self.centerView.frame.size.width / 2.0f;
 //    self.redCenterView.layer.cornerRadius   = self.redCenterView.frame.size.width / 2.0f;
 }
@@ -72,27 +74,27 @@
 }
 
 - (void)setupClockNumbers {
-//    float PI2 = M_PI * 2.0f;
-//    CGSize clockSize = self.clockView.frame.size;
-//    CGPoint c = CGPointMake((clockSize.width) / 2.0f, (clockSize.height) / 2.0f);
-//    CGFloat r = (self.clockView.frame.size.width) / 2.0f;
-//    
-//    for (NSInteger i = 0; i < 12; i++) {
-//        CGFloat x = ((c.x - 6) + (r - 9) * cos((PI2 / 12.0f) * i));
-//        CGFloat y = ((c.y - 6) + (r - 9) * sin((PI2 / 12.0f) * i));
-//        CGRect frame = CGRectMake(x, y, 12.0f, 12.0f);
-//        
-//        UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
-//        hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
-//        hourLabel.backgroundColor = [UIColor clearColor];
-//        
-//        NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
-//        hourLabel.text = @(time).stringValue;
-//        hourLabel.textColor = [UIColor whiteColor];
-//        hourLabel.textAlignment = NSTextAlignmentCenter;
-//        
-//        [self.clockView addSubview:hourLabel];
-//    }
+    float PI2 = M_PI * 2.0f;
+    CGSize clockSize = self.bounds.size;
+    CGPoint c = CGPointMake((clockSize.width) / 2.0f, (clockSize.height) / 2.0f);
+    CGFloat r = (self.bounds.size.width) / 2.0f;
+    
+    for (NSInteger i = 0; i < 12; i++) {
+        CGFloat x = ((c.x - 6) + (r - 9) * cos((PI2 / 12.0f) * i));
+        CGFloat y = ((c.y - 6) + (r - 9) * sin((PI2 / 12.0f) * i));
+        CGRect frame = CGRectMake(x, y, 12.0f, 12.0f);
+        
+        UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
+        hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        hourLabel.backgroundColor = [UIColor clearColor];
+        
+        NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
+        hourLabel.text = @(time).stringValue;
+        hourLabel.textColor = [UIColor whiteColor];
+        hourLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [self addSubview:hourLabel];
+    }
 }
 
 //- (void)setupRefreshViewLoop {

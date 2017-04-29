@@ -54,7 +54,7 @@
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIV-mF-nf6" customClass="ClockView">
                                                     <rect key="frame" x="289.5" y="6" width="79.5" height="79.5"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="FIV-mF-nf6" secondAttribute="height" multiplier="1:1" id="xYH-vl-Hp6"/>
                                                     </constraints>

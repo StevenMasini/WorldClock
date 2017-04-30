@@ -70,15 +70,15 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 #pragma mark - HomeViewController
 
 - (void)setupRefreshViewLoop {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-                                                selector:@selector(updateCell)
-                                                userInfo:nil repeats:YES];
-    [self.timer fire];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+//                                                selector:@selector(updateCell)
+//                                                userInfo:nil repeats:YES];
+//    [self.timer fire];
 }
 
 - (void)invalidateRefreshLoop {
-    [self.timer invalidate];
-    self.timer = nil;
+//    [self.timer invalidate];
+//    self.timer = nil;
 }
 
 #pragma mark - UITableViewDataSource

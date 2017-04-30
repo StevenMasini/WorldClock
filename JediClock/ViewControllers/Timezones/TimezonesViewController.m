@@ -133,8 +133,9 @@ static NSString *cellIdentifier = @"TimezoneCell";
     timezone.order = @([Timezone MR_countOfEntitiesWithPredicate:predicate]);
 //    NSLog(@"ORDER: %@", timezone.order);
     
+    __weak typeof(self) wself = self;
     [timezone.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [wself.navigationController popViewControllerAnimated:YES];
     }];
 }
 
@@ -174,11 +175,8 @@ static NSString *cellIdentifier = @"TimezoneCell";
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(id)sender {
-    __weak typeof(self) wself = self;
-    [self dismissViewControllerAnimated:YES completion:^{
-        [wself.searchBar resignFirstResponder];
-    }];
+    [self.searchBar resignFirstResponder];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 @end

@@ -22,6 +22,12 @@
 // property
 @property (strong, nonatomic) NSMutableArray *timezones;
 @property (assign, nonatomic) BOOL shouldDisplayNumericClock;
+
+// timer
+// property
+@property (assign, nonatomic) NSTimeInterval timeInterval;
+@property (strong, nonatomic) NSTimer *timer;
+
 @end
 
 @implementation HomeViewController
@@ -61,6 +67,20 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 //    NSLog(@"♻️ Dealloc %@", NSStringFromClass([self class]));
 }
 
+#pragma mark - HomeViewController
+
+- (void)setupRefreshViewLoop {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+                                                selector:@selector(updateCell)
+                                                userInfo:nil repeats:YES];
+    [self.timer fire];
+}
+
+- (void)invalidateRefreshLoop {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -91,7 +111,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         Timezone *timezone = self.timezones[indexPath.row];
 //        NSLog(@"ORDER: %@", timezone.order);
         cell.shouldDisplayNumericClock = self.shouldDisplayNumericClock;
-        cell.timezone = timezone;
+        [cell updateCellWithTimezone:timezone];
         
         return cell;
     } else {
@@ -164,7 +184,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[ClockCell class]]) {
         ClockCell *clockCell = (ClockCell *)cell;
-        [clockCell invalidateRefreshLoop];
+//        [clockCell invalidateRefreshLoop];
     }
 }
 

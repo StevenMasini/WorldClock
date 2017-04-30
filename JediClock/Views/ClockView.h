@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ClockView : UIView
-
+@property (nonatomic, assign) Boolean isDayTheme;
 @end

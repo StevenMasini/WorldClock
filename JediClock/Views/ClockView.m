@@ -10,10 +10,12 @@
 
 @interface ClockView ()
 
-@property (strong, nonatomic) CAShapeLayer *clockLayer;
-@property (strong, nonatomic) CALayer *hourHandLayer;
-@property (strong, nonatomic) CALayer *minuteHandLayer;
-@property (strong, nonatomic) CALayer *secondHandLayer;
+@property (strong, nonatomic) CAShapeLayer  *clockLayer;
+@property (strong, nonatomic) CAShapeLayer  *innerLayer;
+@property (strong, nonatomic) CAShapeLayer  *dotLayer;
+@property (strong, nonatomic) CALayer       *hourHandLayer;
+@property (strong, nonatomic) CALayer       *minuteHandLayer;
+@property (strong, nonatomic) CALayer       *secondHandLayer;
 
 @end
 
@@ -24,8 +26,42 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    // 1) setup the circles rendering
-    [self setupCircles];
+    [self setupClockLayers];
+}
+
+#pragma mark - ClockCell setup methods
+
+- (void)setupClockLayers {
+    // initialize the main layer
+    self.clockLayer             = [CAShapeLayer layer];
+    self.clockLayer.path        = [UIBezierPath bezierPathWithOvalInRect:self.bounds].CGPath;
+    self.clockLayer.fillColor   = [UIColor blackColor].CGColor;
+    
+    
+    // define the size and position of the inner circle
+    CGFloat innerWidth    = self.bounds.size.width / 18.0;
+    CGFloat innerHeight   = self.bounds.size.height / 18.0;
+    CGFloat innerX        = (self.bounds.size.width / 2.0) - (innerWidth / 2.0);
+    CGFloat innerY        = (self.bounds.size.height / 2.0) - (innerHeight / 2.0);
+    CGRect innerRect      = CGRectMake(innerX, innerY, innerWidth, innerHeight);
+    
+    self.innerLayer            = [CAShapeLayer layer];
+    self.innerLayer.path       = [UIBezierPath bezierPathWithOvalInRect:innerRect].CGPath;
+    self.innerLayer.fillColor  = [UIColor whiteColor].CGColor;
+    
+    [self.clockLayer addSublayer:self.innerLayer];
+    
+    CGRect dotRect = CGRectMake(innerX + innerWidth / 4.0, innerY + innerHeight / 4.0, innerWidth / 2.0, innerHeight / 2.0);
+    self.dotLayer = [CAShapeLayer layer];
+    self.dotLayer.path = [UIBezierPath bezierPathWithOvalInRect:dotRect].CGPath;
+    self.dotLayer.fillColor = [UIColor redColor].CGColor;
+    
+    [self.innerLayer addSublayer:self.dotLayer];
+    
+    [self.layer addSublayer:self.clockLayer];
+    
+//    self.centerView.layer.cornerRadius      = self.centerView.frame.size.width / 2.0f;
+//    self.redCenterView.layer.cornerRadius   = self.redCenterView.frame.size.width / 2.0f;
     
     // 2) setup the hands rendering
     [self setupHands];
@@ -34,43 +70,31 @@
     [self setupClockNumbers];
 }
 
-
-#pragma mark - ClockCell setup methods
-
-- (void)setupCircles {
-    // initialize the main layer
-    self.clockLayer = [CAShapeLayer layer];
-    
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:self.bounds];
-    self.clockLayer.path = path.CGPath;
-    self.clockLayer.fillColor = [UIColor blackColor].CGColor;
-    
-    [self.layer addSublayer:self.clockLayer];
-    
-//    self.centerView.layer.cornerRadius      = self.centerView.frame.size.width / 2.0f;
-//    self.redCenterView.layer.cornerRadius   = self.redCenterView.frame.size.width / 2.0f;
-}
-
 - (void)setupHands {
+    self.hourHandLayer      = [CALayer layer];
+    self.minuteHandLayer    = [CALayer layer];
+    self.secondHandLayer    = [CALayer layer];
+    
+    
     // setup hands view anchor point
-//    self.secondHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
-//    self.minuteHandView.layer.anchorPoint   = CGPointMake(0.5f, 1.0f);
-//    self.hourHandView.layer.anchorPoint     = CGPointMake(0.5f, 1.0f);
+    self.hourHandLayer.anchorPoint      = CGPointMake(0.5f, 1.0f);
+    self.minuteHandLayer.anchorPoint    = CGPointMake(0.5f, 1.0f);
+    self.secondHandLayer.anchorPoint    = CGPointMake(0.5f, 1.0f);
     
     // setup anti-aliasing for hands
-//    self.secondHandView.layer.borderColor       = [UIColor clearColor].CGColor;
-//    self.secondHandView.layer.borderWidth       = 1.0f;
-//    self.secondHandView.layer.shouldRasterize   = YES;
+    self.secondHandLayer.borderColor       = [UIColor clearColor].CGColor;
+    self.secondHandLayer.borderWidth       = 1.0f;
+    self.secondHandLayer.shouldRasterize   = YES;
     
-//    self.minuteHandView.layer.borderColor       = [UIColor clearColor].CGColor;
-//    self.minuteHandView.layer.borderWidth       = 0.5f;
-//    self.minuteHandView.layer.cornerRadius      = 1.0f;
-//    self.minuteHandView.layer.shouldRasterize   = YES;
-//    
-//    self.hourHandView.layer.borderColor         = [UIColor clearColor].CGColor;
-//    self.hourHandView.layer.borderWidth         = 0.5f;
-//    self.hourHandView.layer.cornerRadius        = 1.0f;
-//    self.hourHandView.layer.shouldRasterize     = YES;
+    self.minuteHandLayer.borderColor       = [UIColor clearColor].CGColor;
+    self.minuteHandLayer.borderWidth       = 0.5f;
+    self.minuteHandLayer.cornerRadius      = 1.0f;
+    self.minuteHandLayer.shouldRasterize   = YES;
+
+    self.hourHandLayer.borderColor         = [UIColor clearColor].CGColor;
+    self.hourHandLayer.borderWidth         = 0.5f;
+    self.hourHandLayer.cornerRadius        = 1.0f;
+    self.hourHandLayer.shouldRasterize     = YES;
 }
 
 - (void)setupClockNumbers {
@@ -97,11 +121,10 @@
     }
 }
 
-//- (void)setupRefreshViewLoop {
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-//                                                selector:@selector(updateCell)
-//                                                userInfo:nil repeats:YES];
-//    [self.timer fire];
-//}
+#pragma mark - Getter/Setter
+
+- (void)setIsDayTheme:(Boolean)isDayTheme {
+    _isDayTheme = isDayTheme;
+}
 
 @end

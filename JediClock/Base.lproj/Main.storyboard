@@ -130,7 +130,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="NuO-Cw-pJ0">
                             <color key="tintColor" red="0.98823529409999999" green="0.23921568630000001" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="Bfd-pa-hCs" kind="presentation" id="yjF-Uj-YXZ"/>
+                                <segue destination="qRA-2S-sBz" kind="show" id="Y03-yz-QHR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -148,23 +148,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="356" y="460.11994002998506"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="743-hQ-uDY">
-            <objects>
-                <navigationController id="Bfd-pa-hCs" sceneMemberID="viewController">
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7ie-dR-YSH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="qRA-2S-sBz" kind="relationship" relationship="rootViewController" id="rrM-aB-oG5"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PHM-Xd-FcF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1148" y="460"/>
         </scene>
         <!--Timezones View Controller-->
         <scene sceneID="wLR-F4-KfD">
@@ -221,7 +204,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search City" translatesAutoresizingMaskIntoConstraints="NO" id="SoS-yr-P51">
-                                        <rect key="frame" x="0.0" y="0.0" width="275" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="225" height="44"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <connections>
@@ -233,7 +216,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="SoS-yr-P51" secondAttribute="bottom" id="LVx-gv-5KI"/>
                                     <constraint firstItem="SoS-yr-P51" firstAttribute="leading" secondItem="olM-we-HeE" secondAttribute="leading" id="aMh-S0-Mzp"/>
-                                    <constraint firstAttribute="trailing" secondItem="SoS-yr-P51" secondAttribute="trailing" constant="-50" id="pwV-Be-MpD"/>
+                                    <constraint firstAttribute="trailing" secondItem="SoS-yr-P51" secondAttribute="trailing" id="pwV-Be-MpD"/>
                                     <constraint firstItem="SoS-yr-P51" firstAttribute="top" secondItem="olM-we-HeE" secondAttribute="top" id="v9K-t6-XeZ"/>
                                 </constraints>
                             </view>
@@ -261,7 +244,7 @@
                     </items>
                 </navigationBar>
             </objects>
-            <point key="canvasLocation" x="1904.8" y="459.22038980509751"/>
+            <point key="canvasLocation" x="1239" y="460"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oFB-pB-lwr">

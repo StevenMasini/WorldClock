@@ -21,10 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numericClockLabel;
 
-// property
-@property (assign, nonatomic) NSTimeInterval timeInterval;
-@property (strong, nonatomic) NSTimer *timer;
-
 @end
 
 @implementation ClockCell
@@ -57,52 +53,49 @@
 - (void)switchClockToNumeric {
     self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
     
-//    __weak typeof(self) wself = self;
-//    [UIView animateWithDuration:0.25f animations:^{
-//        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
-//        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
-//    }];
+    __weak typeof(self) wself = self;
+    [UIView animateWithDuration:0.25f animations:^{
+        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
+    }];
 }
-
-- (void)invalidateRefreshLoop {
-    [self.timer invalidate];
-    self.timer = nil;
-}
-
 
 #pragma mark - UITableViewCell inherited methods
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-//    __weak typeof(self) wself = self;
-//    [UIView animateWithDuration:0.25f animations:^{
-//        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
-//        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
-//    }];
+    __weak typeof(self) wself = self;
+    [UIView animateWithDuration:0.25f animations:^{
+        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+    }];
 }
 
 #pragma mark - ClockCell setter methods
 
-- (void)setTimezone:(Timezone *)timezone {
-    _timezone = timezone;
-    
-    self.timeInterval = [timezone timeInterval];
-    self.titleLabel.text = timezone.city;
-    
-//    [self setupRefreshViewLoop];
-}
+//- (void)setTimezone:(Timezone *)timezone {
+//    _timezone = timezone;
+//    
+//    self.timeInterval = [timezone timeInterval];
+//    self.titleLabel.text = timezone.city;
+//
+////    [self setupRefreshViewLoop];
+//}
 
 
 
 #pragma mark - ClockCell update methods
 
-- (void)updateCell {
+- (void)updateCellWithTimezone: (Timezone *)timezone {
     // 1) retrieve the right time
-    NSDate *date = self.timezone.date;
+    NSDate *date = timezone.date;
     if (!date) {
         return;
     }
+    
+    self.titleLabel.text = timezone.city;
+
     
     // 2) update the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
@@ -123,7 +116,7 @@
 //    }
     
     // 4) update the detail text
-    self.detailTitleLabel.attributedText = [self.timezone attributedStringTimelapse];
+    self.detailTitleLabel.attributedText = [timezone attributedStringTimelapse];
     
     // 5) update the hands position for the analog clock
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];

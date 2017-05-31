@@ -106,11 +106,8 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     if (indexPath.section == 0) {
         ClockCell *cell = [tableView dequeueReusableCellWithIdentifier:kWorldClockCellIdentifier
                                                           forIndexPath:indexPath];
-        cell.showsReorderControl = YES;
-        
         Timezone *timezone = self.timezones[indexPath.row];
 //        NSLog(@"ORDER: %@", timezone.order);
-        cell.shouldDisplayNumericClock = self.shouldDisplayNumericClock;
         [cell updateCellWithTimezone:timezone];
         
         return cell;
@@ -200,7 +197,14 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 
 - (IBAction)tapGestureAction:(id)sender {
     self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSwitchClockNotification object:nil];
+    
+    for (NSUInteger i = 0; i < self.tableView.numberOfSections; i++) {
+        for (NSUInteger j = 0; j < [self.tableView numberOfRowsInSection:i]; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+            ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            cell.clockDisplay = !cell.clockDisplay;
+        }
+    }
 }
 
 @end

@@ -28,36 +28,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.clockView.alpha           = self.shouldDisplayNumericClock ? 0.0f : 1.0f;
-    self.numericClockLabel.alpha   = self.shouldDisplayNumericClock ? 1.0f : 0.0f;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(switchClockToNumeric)
-                                                 name:kSwitchClockNotification
-                                               object:nil];
+    self.clockView.alpha           = self.clockDisplay == NumericClock ? 0.0f : 1.0f;
+    self.numericClockLabel.alpha   = self.clockDisplay == NumericClock ? 1.0f : 0.0f;
+    self.showsReorderControl        = YES;
 }
 
 - (void)prepareForReuse {
-    self.clockView.alpha           = self.shouldDisplayNumericClock ? 0.0f : 1.0f;
-    self.numericClockLabel.alpha   = self.shouldDisplayNumericClock ? 1.0f : 0.0f;
-}
-
-- (void)dealloc {
-    // even if the dealloc is rarely call because of the reuse cell system,
-    // remove the notification once dealloc is called, to be clean
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - ClockCell methods
-
-- (void)switchClockToNumeric {
-    self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
-    
-    __weak typeof(self) wself = self;
-    [UIView animateWithDuration:0.25f animations:^{
-        wself.clockView.alpha           = wself.shouldDisplayNumericClock ? 0.0f : 1.0f;
-        wself.numericClockLabel.alpha   = wself.shouldDisplayNumericClock ? 1.0f : 0.0f;
-    }];
+    self.clockView.alpha           = self.clockDisplay == NumericClock ? 0.0f : 1.0f;
+    self.numericClockLabel.alpha   = self.clockDisplay == NumericClock ? 1.0f : 0.0f;
 }
 
 #pragma mark - UITableViewCell inherited methods
@@ -67,8 +45,8 @@
     
     __weak typeof(self) wself = self;
     [UIView animateWithDuration:0.25f animations:^{
-        wself.clockView.alpha           = (editing || wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
-        wself.numericClockLabel.alpha   = (editing || !wself.shouldDisplayNumericClock) ? 0.0f : 1.0f;
+        wself.clockView.alpha           = (editing || wself.clockDisplay == NumericClock) ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = (editing || wself.clockDisplay == NumericClock) ? 1.0f : 0.0f;
     }];
 }
 
@@ -83,7 +61,17 @@
 ////    [self setupRefreshViewLoop];
 //}
 
-
+- (void)setClockDisplay:(ClockDisplay)clockDisplay {
+    [self willChangeValueForKey:@"clockDisplay"];
+    _clockDisplay = clockDisplay;
+    [self didChangeValueForKey:@"clockDisplay"];
+    
+    __weak typeof(self) wself = self;
+    [UIView animateWithDuration:0.25f animations:^{
+        wself.clockView.alpha           = (wself.clockDisplay == NumericClock) ? 0.0f : 1.0f;
+        wself.numericClockLabel.alpha   = (wself.clockDisplay == NumericClock) ? 1.0f : 0.0f;
+    }];
+}
 
 #pragma mark - ClockCell update methods
 
@@ -103,17 +91,7 @@
     self.numericClockLabel.text = [dateFormatter stringFromDate:date];
     
     // 3) update clock color according to the day/night
-//    BOOL isDay = self.timezone.isDay;
-//    self.clockView.backgroundColor      = isDay ? [UIColor whiteGrayColor] : [UIColor blackColor];
-//    self.minuteHandView.backgroundColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-//    self.hourHandView.backgroundColor   = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-//    self.centerView.backgroundColor     = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-//    for (UIView *subview in self.clockView.subviews) {
-//        if ([subview isKindOfClass:[UILabel class]]) {
-//            UILabel *label = (UILabel *)subview;
-//            label.textColor = isDay ? [UIColor blackColor] : [UIColor whiteColor];
-//        }
-//    }
+    self.clockView.isDayTheme = timezone.isDay;
     
     // 4) update the detail text
     self.detailTitleLabel.attributedText = [timezone attributedStringTimelapse];

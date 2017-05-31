@@ -10,11 +10,14 @@
 
 @class Timezone;
 
-static NSString *kSwitchClockNotification = @"SwitchClockNotification";
+typedef enum : NSUInteger {
+    AnalogicClock,
+    NumericClock
+} ClockDisplay;
 
 @interface ClockCell : UITableViewCell
 
-@property (assign, nonatomic) BOOL shouldDisplayNumericClock;
+@property (assign, nonatomic) ClockDisplay clockDisplay;
 
 - (void)updateCellWithTimezone: (Timezone *)timezone;
 

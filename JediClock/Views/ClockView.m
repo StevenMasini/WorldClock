@@ -76,30 +76,43 @@
 }
 
 - (void)setupHands {
-    
+    // retrieve the center of the clock layer
     CGPoint center = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
     
-    self.minuteHandLayer    = [CAShapeLayer layer];
-    self.secondHandLayer    = [CAShapeLayer layer];
     
-    // setup the hour hand
-    CGFloat hourHandWidth   = self.bounds.size.width / 28.0;
-    CGFloat hourHandHeight  = self.bounds.size.height / 4.0;
-    CGFloat hourHandY       = self.dotLayer.frame.origin.y;
+    
+    // setup the hour hand layer
+    CGFloat hourHandWidth   = self.bounds.size.width / 34.0f;
+    CGFloat hourHandHeight  = self.bounds.size.height / 4.8f;
     
     self.hourHandLayer              = [CAShapeLayer layer];
     self.hourHandLayer.frame        = CGRectMake(0, 0, hourHandWidth, hourHandHeight);
     self.hourHandLayer.anchorPoint  = CGPointMake(0.5f, 1.0f);
-    self.hourHandLayer.position     = CGPointMake(center.x, hourHandY);
+    self.hourHandLayer.position     = CGPointMake(center.x, center.y);
     self.hourHandLayer.path         = [UIBezierPath bezierPathWithRoundedRect:self.hourHandLayer.bounds cornerRadius:2.0].CGPath;
     self.hourHandLayer.fillColor    = [UIColor whiteColor].CGColor;
     
-    
     [self.clockLayer insertSublayer:self.hourHandLayer below:self.dotLayer];
     
-    // setup hands view anchor point
+    // setup the minute hand layer
+    self.minuteHandLayer                = [CAShapeLayer layer];
+    self.minuteHandLayer.frame          = CGRectMake(0, 0, hourHandWidth, hourHandHeight * 1.5f);
     self.minuteHandLayer.anchorPoint    = CGPointMake(0.5f, 1.0f);
+    self.minuteHandLayer.position       = CGPointMake(center.x, center.y);
+    self.minuteHandLayer.path           = [UIBezierPath bezierPathWithRoundedRect:self.minuteHandLayer.bounds cornerRadius:2.0].CGPath;
+    self.minuteHandLayer.fillColor      = [UIColor whiteColor].CGColor;
+    
+    [self.clockLayer insertSublayer:self.minuteHandLayer below:self.hourHandLayer];
+    
+    // setup the second hand layer
+    self.secondHandLayer                = [CAShapeLayer layer];
+    self.secondHandLayer.frame          = CGRectMake(0, 0, hourHandWidth / 2.0, hourHandHeight * 1.5f);
     self.secondHandLayer.anchorPoint    = CGPointMake(0.5f, 1.0f);
+    self.secondHandLayer.position       = CGPointMake(center.x, center.y);
+    self.secondHandLayer.path           = [UIBezierPath bezierPathWithRoundedRect:self.secondHandLayer.bounds cornerRadius:2.0].CGPath;
+    self.secondHandLayer.fillColor      = [UIColor redColor].CGColor;
+    
+    [self.clockLayer insertSublayer:self.secondHandLayer above: self.hourHandLayer];
 }
 
 - (void)setupClockNumbers {
@@ -151,18 +164,17 @@
  *  @param dateComponents The data components that containt the second, minute and hour
  */
 - (void)refreshClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
-//    NSInteger second    = dateComponents.second;
-    
     NSInteger minute    = dateComponents.minute;
     NSInteger hour      = dateComponents.hour;
     CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
     self.hourHandLayer.transform = CATransform3DMakeRotation(hourAngle, 0.0, 0.0, 1.0);
     
-//    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
-//    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
-//    
-//    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
-//    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
+    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
+    self.minuteHandLayer.transform   = CATransform3DMakeRotation(minuteAngle, 0.0, 0.0, 1.0);
+    
+    NSInteger second    = dateComponents.second;
+    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
+    self.secondHandLayer.transform   = CATransform3DMakeRotation(secondAngle, 0.0, 0.0, 1.0);
 }
 
 @end

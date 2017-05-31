@@ -119,7 +119,6 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         ClockCell *cell = [tableView dequeueReusableCellWithIdentifier:kWorldClockCellIdentifier
                                                           forIndexPath:indexPath];
         Timezone *timezone = self.timezones[indexPath.row];
-//        NSLog(@"ORDER: %@", timezone.order);
         [cell updateCellWithTimezone:timezone];
         
         return cell;
@@ -153,8 +152,6 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
         }
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-        
-        
         
         // avoid a crash if there is no more timezone to display
         if (self.timezones.count == 0) {

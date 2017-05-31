@@ -83,7 +83,6 @@
     }
     
     self.titleLabel.text = timezone.city;
-
     
     // 2) update the time for the numeric clock
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
@@ -100,31 +99,13 @@
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit unit = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *dateComponents = [calendar components:unit fromDate:date];
+    
+    __weak typeof(self) wself = self;
     [UIView animateWithDuration:0.1f animations:^{
-        [self updateClockHandsWithDateComponents:dateComponents];
+        [wself.clockView refreshClockHandsWithDateComponents:dateComponents];
     }];
 }
 
-/**
- *  @author Steven Masini, 08-Aug-2015
- *
- *  @brief  Update the hands postion
- *
- *  @param dateComponents The data components that containt the second, minute and hour
- */
-- (void)updateClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
-//    NSInteger second    = dateComponents.second;
-//    NSInteger minute    = dateComponents.minute;
-//    NSInteger hour      = dateComponents.hour;
-    
-//    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
-//    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
-//    
-//    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
-//    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
-//    
-//    CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
-//    self.hourHandView.transform     = CGAffineTransformMakeRotation(hourAngle);
-}
+
 
 @end

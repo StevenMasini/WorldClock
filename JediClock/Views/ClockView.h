@@ -10,4 +10,6 @@
 
 @interface ClockView : UIView
 @property (nonatomic, assign) Boolean isDayTheme;
+
+- (void)refreshClockHandsWithDateComponents:(NSDateComponents *)dateComponents;
 @end

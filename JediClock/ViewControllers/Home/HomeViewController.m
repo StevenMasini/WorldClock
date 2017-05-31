@@ -41,6 +41,8 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
     [super viewDidLoad];
     
     [self.editBarButtonItem setPossibleTitles:[NSSet setWithObjects:@"", @"Edit", @"Done", nil]];
+    
+    [self setupRefreshViewLoop];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,15 +72,25 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 #pragma mark - HomeViewController
 
 - (void)setupRefreshViewLoop {
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
-//                                                selector:@selector(updateCell)
-//                                                userInfo:nil repeats:YES];
-//    [self.timer fire];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self
+                                                selector:@selector(updateCells)
+                                                userInfo:nil repeats:YES];
+    [self.timer fire];
 }
 
 - (void)invalidateRefreshLoop {
-//    [self.timer invalidate];
-//    self.timer = nil;
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+- (void)updateCells {
+    NSArray<NSIndexPath *> *indexPaths = [self.tableView indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in indexPaths) {
+        ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        Timezone *timezone = self.timezones[indexPath.row];
+        
+        [cell updateCellWithTimezone:timezone];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -176,13 +188,6 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.1f;
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([cell isKindOfClass:[ClockCell class]]) {
-        ClockCell *clockCell = (ClockCell *)cell;
-//        [clockCell invalidateRefreshLoop];
-    }
 }
 
 #pragma mark - IBAction

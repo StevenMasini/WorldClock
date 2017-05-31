@@ -11,8 +11,6 @@
 
 @interface ClockView ()
 
-@property (assign, nonatomic) CGPoint center;
-
 #pragma mark - CAShapeLayers
 @property (strong, nonatomic) CAShapeLayer  *clockLayer;
 @property (strong, nonatomic) CAShapeLayer  *innerLayer;
@@ -143,6 +141,28 @@
             label.textColor = isDayTheme ? [UIColor blackColor] : [UIColor whiteColor];
         }
     }
+}
+
+/**
+ *  @author Steven Masini, 08-Aug-2015
+ *
+ *  @brief  Update the hands postion
+ *
+ *  @param dateComponents The data components that containt the second, minute and hour
+ */
+- (void)refreshClockHandsWithDateComponents:(NSDateComponents *)dateComponents {
+//    NSInteger second    = dateComponents.second;
+    
+    NSInteger minute    = dateComponents.minute;
+    NSInteger hour      = dateComponents.hour;
+    CGFloat hourAngle = (((M_PI * 2) / 12) * hour) + ((((M_PI * 2) / 60) * minute) / 12);
+    self.hourHandLayer.transform = CATransform3DMakeRotation(hourAngle, 0.0, 0.0, 1.0);
+    
+//    CGFloat secondAngle = ((M_PI * 2) / 60) * second;
+//    self.secondHandView.transform   = CGAffineTransformMakeRotation(secondAngle);
+//    
+//    CGFloat minuteAngle = ((M_PI * 2) / 60) * minute;
+//    self.minuteHandView.transform   = CGAffineTransformMakeRotation(minuteAngle);
 }
 
 @end

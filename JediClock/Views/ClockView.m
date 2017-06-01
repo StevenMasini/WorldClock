@@ -117,19 +117,25 @@
 
 - (void)setupClockNumbers {
     float PI2 = M_PI * 2.0f;
+    
     CGSize clockSize = self.bounds.size;
     CGPoint c = CGPointMake((clockSize.width) / 2.0f, (clockSize.height) / 2.0f);
     CGFloat r = (self.bounds.size.width) / 2.0f;
     
     for (NSInteger i = 0; i < 12; i++) {
-        CGFloat x = ((c.x - 6) + (r - 9) * cos((PI2 / 12.0f) * i));
-        CGFloat y = ((c.y - 6) + (r - 9) * sin((PI2 / 12.0f) * i));
-        CGRect frame = CGRectMake(x, y, 12.0f, 12.0f);
-        
+        // create the label view
+        CGRect frame = CGRectMake(0, 0, 12.0f, 12.0f);
         UILabel *hourLabel = [[UILabel alloc] initWithFrame:frame];
-        hourLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
-        hourLabel.backgroundColor = [UIColor clearColor];
+        hourLabel.font              = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        hourLabel.backgroundColor   = [UIColor clearColor];
         
+        // set the position for the label
+        CGFloat x = ((c.x) + (r - 7.5f) * cos((PI2 / 12.0f) * i));
+        CGFloat y = ((c.y) + (r - 7.5f) * sin((PI2 / 12.0f) * i));
+        hourLabel.layer.position    = CGPointMake(x, y);
+        hourLabel.layer.anchorPoint = CGPointMake(0.5f, 0.5f);
+        
+        // assign the hour to the label
         NSInteger time = (i + 3) <= 12 ? (i + 3) : i - 9;
         hourLabel.text = @(time).stringValue;
         hourLabel.textColor = [UIColor whiteColor];

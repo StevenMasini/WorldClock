@@ -76,6 +76,7 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
                                                 selector:@selector(updateCells)
                                                 userInfo:nil repeats:YES];
     [self.timer fire];
+    [NSRunLoop.currentRunLoop addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)invalidateRefreshLoop {

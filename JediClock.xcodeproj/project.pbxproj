@@ -20,11 +20,11 @@
 		9001C3961EB4D5150089B2B5 /* JediClock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9001C3891EB4D5150089B2B5 /* JediClock.xcdatamodeld */; };
 		9001C3971EB4D5150089B2B5 /* Timezone.m in Sources */ = {isa = PBXBuildFile; fileRef = 9001C38C1EB4D5150089B2B5 /* Timezone.m */; };
 		901DB50E1EADA71F00A20D5C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 901DB4FC1EADA71F00A20D5C /* Images.xcassets */; };
-		901DB50F1EADA71F00A20D5C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 901DB4FE1EADA71F00A20D5C /* LaunchScreen.xib */; };
-		901DB5101EADA71F00A20D5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 901DB5001EADA71F00A20D5C /* Main.storyboard */; };
 		901DB5111EADA71F00A20D5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 901DB5021EADA71F00A20D5C /* AppDelegate.m */; };
 		90694B0D1B6F9E770066795F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 90694B0C1B6F9E770066795F /* main.m */; };
 		90694B2A1B6F9E770066795F /* JediClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90694B291B6F9E770066795F /* JediClockTests.m */; };
+		90EE22A01EF2AA100007369F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90EE229E1EF2AA100007369F /* LaunchScreen.xib */; };
+		90EE22A11EF2AA100007369F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90EE229F1EF2AA100007369F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +63,6 @@
 		9001C38B1EB4D5150089B2B5 /* Timezone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timezone.h; sourceTree = "<group>"; };
 		9001C38C1EB4D5150089B2B5 /* Timezone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timezone.m; sourceTree = "<group>"; };
 		901DB4FC1EADA71F00A20D5C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		901DB4FF1EADA71F00A20D5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		901DB5011EADA71F00A20D5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		901DB5021EADA71F00A20D5C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		901DB5031EADA71F00A20D5C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		90694B071B6F9E770066795F /* JediClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JediClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +71,8 @@
 		90694B231B6F9E770066795F /* JediClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JediClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90694B281B6F9E770066795F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90694B291B6F9E770066795F /* JediClockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JediClockTests.m; sourceTree = "<group>"; };
+		90EE229E1EF2AA100007369F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		90EE229F1EF2AA100007369F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,15 +191,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		901DB4FD1EADA71F00A20D5C /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				901DB4FE1EADA71F00A20D5C /* LaunchScreen.xib */,
-				901DB5001EADA71F00A20D5C /* Main.storyboard */,
-			);
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
 		90694AFE1B6F9E770066795F = {
 			isa = PBXGroup;
 			children = (
@@ -225,9 +216,10 @@
 			children = (
 				901DB5031EADA71F00A20D5C /* AppDelegate.h */,
 				901DB5021EADA71F00A20D5C /* AppDelegate.m */,
-				901DB4FD1EADA71F00A20D5C /* Base.lproj */,
-				9001C37C1EB4D5150089B2B5 /* Categories */,
+				90EE229F1EF2AA100007369F /* Main.storyboard */,
 				901DB4FC1EADA71F00A20D5C /* Images.xcassets */,
+				90EE229E1EF2AA100007369F /* LaunchScreen.xib */,
+				9001C37C1EB4D5150089B2B5 /* Categories */,
 				9001C3851EB4D5150089B2B5 /* Managers */,
 				9001C3881EB4D5150089B2B5 /* Models */,
 				90694B0A1B6F9E770066795F /* Supporting Files */,
@@ -347,8 +339,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				901DB5101EADA71F00A20D5C /* Main.storyboard in Resources */,
-				901DB50F1EADA71F00A20D5C /* LaunchScreen.xib in Resources */,
+				90EE22A11EF2AA100007369F /* Main.storyboard in Resources */,
+				90EE22A01EF2AA100007369F /* LaunchScreen.xib in Resources */,
 				901DB50E1EADA71F00A20D5C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,25 +440,6 @@
 			targetProxy = 90694B241B6F9E770066795F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		901DB4FE1EADA71F00A20D5C /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				901DB4FF1EADA71F00A20D5C /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		901DB5001EADA71F00A20D5C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				901DB5011EADA71F00A20D5C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		90694B2B1B6F9E770066795F /* Debug */ = {

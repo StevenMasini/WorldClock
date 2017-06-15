@@ -76,6 +76,8 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
                                                 selector:@selector(updateCells)
                                                 userInfo:nil repeats:YES];
     [self.timer fire];
+    
+    // add the timer to the current run loop
     [NSRunLoop.currentRunLoop addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
@@ -85,12 +87,14 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 - (void)updateCells {
-    NSArray<NSIndexPath *> *indexPaths = [self.tableView indexPathsForVisibleRows];
-    for (NSIndexPath *indexPath in indexPaths) {
-        ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        Timezone *timezone = self.timezones[indexPath.row];
-        
-        [cell updateCellWithTimezone:timezone];
+    if (self.timezones.count > 0) {
+        NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in indexPaths) {
+            ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            Timezone *timezone = self.timezones[indexPath.row];
+            
+            [cell updateCellWithTimezone:timezone];
+        }
     }
 }
 
@@ -199,13 +203,16 @@ static NSString *kNoWorldClockCellIdentifier  = @"NoWorldClockCell";
 }
 
 - (IBAction)tapGestureAction:(id)sender {
-    self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
-    
-    for (NSUInteger i = 0; i < self.tableView.numberOfSections; i++) {
-        for (NSUInteger j = 0; j < [self.tableView numberOfRowsInSection:i]; j++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-            ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            cell.clockDisplay = !cell.clockDisplay;
+    if (self.timezones.count > 0) {
+        self.shouldDisplayNumericClock = !self.shouldDisplayNumericClock;
+        
+        for (NSUInteger i = 0; i < self.tableView.numberOfSections; i++) {
+            for (NSUInteger j = 0; j < [self.tableView numberOfRowsInSection:i]; j++) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                ClockCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                
+                cell.clockDisplay = !cell.clockDisplay;
+            }
         }
     }
 }

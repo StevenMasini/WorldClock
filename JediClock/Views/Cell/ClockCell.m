@@ -45,21 +45,27 @@
     
     __weak typeof(self) wself = self;
     [UIView animateWithDuration:0.25f animations:^{
-        wself.clockView.alpha           = (editing || wself.clockDisplay == NumericClock) ? 0.0f : 1.0f;
-        wself.numericClockLabel.alpha   = (editing || wself.clockDisplay == NumericClock) ? 1.0f : 0.0f;
+        if (editing) {
+            wself.clockView.alpha = 0.0f;
+            wself.numericClockLabel.alpha = 0.0f;
+        } else {
+            switch (wself.clockDisplay) {
+                case NumericClock:
+                    wself.clockView.alpha = 0.0f;
+                    wself.numericClockLabel.alpha = 1.0f;
+                    break;
+                case AnalogicClock:
+                    wself.clockView.alpha = 1.0f;
+                    wself.numericClockLabel.alpha = 0.0f;
+                    break;
+                default:
+                    break;
+            }
+        }
     }];
 }
 
 #pragma mark - ClockCell setter methods
-
-//- (void)setTimezone:(Timezone *)timezone {
-//    _timezone = timezone;
-//    
-//    self.timeInterval = [timezone timeInterval];
-//    self.titleLabel.text = timezone.city;
-//
-////    [self setupRefreshViewLoop];
-//}
 
 - (void)setClockDisplay:(ClockDisplay)clockDisplay {
     [self willChangeValueForKey:@"clockDisplay"];

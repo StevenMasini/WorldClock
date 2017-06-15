@@ -12,7 +12,8 @@
 
 typedef enum : NSUInteger {
     AnalogicClock,
-    NumericClock
+    NumericClock,
+    NoClock
 } ClockDisplay;
 
 @interface ClockCell : UITableViewCell

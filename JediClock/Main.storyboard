@@ -46,8 +46,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MtA-vZ-3oc">
-                                                    <rect key="frame" x="270.5" y="10" width="90.5" height="42.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="36"/>
+                                                    <rect key="frame" x="255.5" y="21" width="105.5" height="50"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="42"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -62,9 +62,9 @@
                                             <constraints>
                                                 <constraint firstItem="HHo-Eu-xn0" firstAttribute="leading" secondItem="r3u-Bm-rax" secondAttribute="leading" constant="8" id="7lX-AR-ptu"/>
                                                 <constraint firstAttribute="bottom" secondItem="FIV-mF-nf6" secondAttribute="bottom" constant="6" id="BMr-ZI-99S"/>
-                                                <constraint firstItem="MtA-vZ-3oc" firstAttribute="top" secondItem="r3u-Bm-rax" secondAttribute="top" constant="10" id="I47-pU-Nx5"/>
                                                 <constraint firstItem="FIV-mF-nf6" firstAttribute="top" secondItem="r3u-Bm-rax" secondAttribute="top" constant="6" id="RSv-Zc-5CI"/>
                                                 <constraint firstItem="dpK-Xd-skL" firstAttribute="top" secondItem="r3u-Bm-rax" secondAttribute="top" constant="18" id="aqH-mJ-r9e"/>
+                                                <constraint firstItem="MtA-vZ-3oc" firstAttribute="centerY" secondItem="r3u-Bm-rax" secondAttribute="centerY" id="cca-84-ghh"/>
                                                 <constraint firstAttribute="trailing" secondItem="MtA-vZ-3oc" secondAttribute="trailing" constant="14" id="hTh-O6-UBJ"/>
                                                 <constraint firstItem="HHo-Eu-xn0" firstAttribute="top" secondItem="dpK-Xd-skL" secondAttribute="bottom" constant="4" id="miL-pQ-H7q"/>
                                                 <constraint firstAttribute="trailing" secondItem="FIV-mF-nf6" secondAttribute="trailing" constant="14" id="qez-eM-MaV"/>
